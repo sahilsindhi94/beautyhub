@@ -7,6 +7,7 @@ import { motion } from 'framer-motion'
 const navItems = [
   { to: '/', label: 'Home' },
   { to: '/products', label: 'Products' },
+  { to: '/orders', label: 'Orders' },
   { to: '/products?category=makeup', label: 'Categories' },
   { to: '/#about', label: 'About' },
   { to: '/#contact', label: 'Contact' },

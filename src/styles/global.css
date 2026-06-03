@@ -253,6 +253,48 @@ a {
   transform: translateY(-1px);
 }
 
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.45rem 0.85rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-transform: capitalize;
+}
+
+.status-pending {
+  background: rgba(247, 180, 87, 0.12);
+  color: #d49524;
+}
+
+.status-confirmed {
+  background: rgba(28, 176, 116, 0.12);
+  color: #1e7d53;
+}
+
+.status-packed {
+  background: rgba(91, 103, 255, 0.12);
+  color: #4636c2;
+}
+
+.status-shipped {
+  background: rgba(66, 148, 255, 0.12);
+  color: #1a68c1;
+}
+
+.status-delivered {
+  background: rgba(27, 142, 76, 0.12);
+  color: #185b45;
+}
+
+.status-cancelled {
+  background: rgba(220, 55, 75, 0.12);
+  color: #b81d33;
+}
+
 .sr-only {
   position: absolute;
   width: 1px;

@@ -1,0 +1,154 @@
+.order-details-hero {
+  margin-bottom: 2rem;
+}
+
+.order-details-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.order-summary-card,
+.shipping-card,
+.timeline-card,
+.order-products-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 1.75rem;
+}
+
+.detail-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+}
+
+.order-label {
+  margin: 0 0 0.5rem;
+  color: var(--text-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.8rem;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  color: var(--text-soft);
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.detail-row span:last-child {
+  font-weight: 700;
+  color: var(--text);
+}
+
+.timeline-card h2,
+.order-products-panel h2 {
+  margin-top: 0;
+}
+
+.timeline-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.timeline-step {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 1rem;
+  align-items: center;
+  color: var(--text-soft);
+}
+
+.timeline-step.active {
+  color: var(--text);
+}
+
+.timeline-marker {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  background: #fff;
+}
+
+.timeline-step.active .timeline-marker {
+  border-color: var(--accent);
+  background: var(--accent);
+}
+
+.timeline-step small {
+  display: block;
+  color: var(--accent);
+  margin-top: 0.25rem;
+}
+
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.order-products-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.order-product-row {
+  display: grid;
+  grid-template-columns: 72px 1fr auto;
+  gap: 1rem;
+  align-items: center;
+  padding: 1rem;
+  border-radius: 18px;
+  background: var(--accent-soft);
+}
+
+.product-image {
+  width: 72px;
+  height: 72px;
+  border-radius: 20px;
+  background-size: cover;
+  background-position: center;
+}
+
+.product-copy {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.product-name {
+  margin: 0;
+  font-weight: 700;
+}
+
+.product-meta {
+  margin: 0;
+  color: var(--text-soft);
+}
+
+.product-price {
+  font-weight: 700;
+  color: var(--text);
+}
+
+.orders-not-found {
+  display: grid;
+  gap: 1rem;
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+@media (max-width: 900px) {
+  .order-details-grid {
+    grid-template-columns: 1fr;
+  }
+}

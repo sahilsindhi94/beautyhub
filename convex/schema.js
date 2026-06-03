@@ -40,23 +40,36 @@ export default defineSchema({
   }),
 
   orders: defineTable({
-    userId: v.id("users"),
-    items: v.array(
+    userId: v.string(),
+    orderNumber: v.string(),
+    orderItems: v.array(
       v.object({
-        productId: v.id("products"),
+        productId: v.optional(v.id("products")),
+        name: v.string(),
+        image: v.string(),
         quantity: v.number(),
         price: v.number(),
       })
     ),
+    subtotal: v.number(),
+    shipping: v.number(),
+    discount: v.number(),
     total: v.number(),
-    status: v.string(), // e.g., 'pending', 'processing', 'shipped', 'delivered'
     address: v.object({
-      street: v.string(),
+      fullName: v.string(),
+      mobile: v.string(),
+      email: v.string(),
+      line1: v.string(),
+      line2: v.optional(v.string()),
       city: v.string(),
       state: v.string(),
-      zipCode: v.string(),
+      pincode: v.string(),
+      street: v.string(),
       country: v.string(),
+      zipCode: v.string(),
     }),
-    paymentMethod: v.string(), // e.g., 'card', 'paypal', 'cod'
+    paymentMethod: v.string(),
+    status: v.string(),
+    createdAt: v.number(),
   }),
 });

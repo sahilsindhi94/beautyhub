@@ -1,0 +1,71 @@
+.profile-card {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 24px;
+  align-items: center;
+  margin: 48px 0 24px;
+  padding: 28px;
+  background: #ffffff;
+  border: 1px solid rgba(183, 110, 121, 0.16);
+  border-radius: 8px;
+  box-shadow: 0 20px 60px rgba(43, 43, 43, 0.08);
+}
+
+.profile-avatar {
+  width: 112px;
+  height: 112px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid rgba(183, 110, 121, 0.18);
+}
+
+.profile-main h1 {
+  margin: 4px 0 8px;
+}
+
+.profile-main p {
+  color: var(--muted);
+}
+
+.role-pill {
+  display: inline-flex;
+  margin-top: 14px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 800;
+  text-transform: capitalize;
+}
+
+.profile-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.profile-stats div {
+  padding: 22px;
+  background: #ffffff;
+  border: 1px solid rgba(183, 110, 121, 0.14);
+  border-radius: 8px;
+}
+
+.profile-stats span {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.profile-stats strong {
+  font-size: 1.3rem;
+  color: var(--text);
+}
+
+@media (max-width: 760px) {
+  .profile-card,
+  .profile-stats {
+    grid-template-columns: 1fr;
+  }
+}

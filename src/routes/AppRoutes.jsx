@@ -13,6 +13,9 @@ import OrderDetailsPage from '../pages/OrderDetails/OrderDetailsPage'
 import LoginPage from '../pages/Login/LoginPage'
 import RegisterPage from '../pages/Register/RegisterPage'
 import ProfilePage from '../pages/Profile/ProfilePage'
+import ProtectedRoute from '../components/auth/ProtectedRoute'
+import RoleRoute from '../components/auth/RoleRoute'
+import AdminPage, { AdminPanel } from '../pages/Admin/AdminPage'
 
 export default function AppRoutes() {
   useScrollToTop()
@@ -20,18 +23,35 @@ export default function AppRoutes() {
   return (
     <Routes>
       <Route path="/" element={<MainLayout />}>
-        <Route index element={<HomePage />} />
-        <Route path="products" element={<ProductsPage />} />
-        <Route path="products/:id" element={<ProductDetailsPage />} />
-        <Route path="cart" element={<CartPage />} />
-        <Route path="wishlist" element={<WishlistPage />} />
-        <Route path="checkout" element={<CheckoutPage />} />
-        <Route path="order-success" element={<OrderSuccessPage />} />
-        <Route path="orders" element={<OrdersPage />} />
-        <Route path="orders/:id" element={<OrderDetailsPage />} />
         <Route path="login" element={<LoginPage />} />
         <Route path="register" element={<RegisterPage />} />
-        <Route path="profile" element={<ProfilePage />} />
+        <Route element={<ProtectedRoute />}>
+          <Route index element={<HomePage />} />
+          <Route path="products" element={<ProductsPage />} />
+          <Route path="products/:id" element={<ProductDetailsPage />} />
+          <Route path="cart" element={<CartPage />} />
+          <Route path="wishlist" element={<WishlistPage />} />
+          <Route path="checkout" element={<CheckoutPage />} />
+          <Route path="order-success" element={<OrderSuccessPage />} />
+          <Route path="orders" element={<OrdersPage />} />
+          <Route path="orders/:id" element={<OrderDetailsPage />} />
+          <Route path="profile" element={<ProfilePage />} />
+          <Route element={<RoleRoute allowedRoles={['admin', 'manager']} />}>
+            <Route path="admin" element={<AdminPage />}>
+              <Route index element={<AdminPanel />} />
+              <Route path="products" element={<AdminPanel title="Products" />} />
+              <Route path="categories" element={<AdminPanel title="Categories" />} />
+              <Route path="orders" element={<AdminPanel title="Orders" />} />
+              <Route path="reviews" element={<AdminPanel title="Reviews" />} />
+              <Route path="coupons" element={<AdminPanel title="Coupons" />} />
+              <Route path="analytics" element={<AdminPanel title="Analytics" />} />
+              <Route element={<RoleRoute allowedRoles={['admin']} />}>
+                <Route path="users" element={<AdminPanel title="Users" />} />
+                <Route path="settings" element={<AdminPanel title="Settings" />} />
+              </Route>
+            </Route>
+          </Route>
+        </Route>
         <Route path="*" element={<Navigate to="/" replace />} />
       </Route>
     </Routes>

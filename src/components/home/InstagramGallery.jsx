@@ -9,7 +9,7 @@ export default function InstagramGallery() {
         <h2>Explore beauty moments from our community.</h2>
       </div>
       <div className="instagram-grid">
-        {instagramFeed.map((item, index) => (
+        {instagramFeed.map((item) => (
           <motion.div
             key={item.id}
             className="instagram-item"

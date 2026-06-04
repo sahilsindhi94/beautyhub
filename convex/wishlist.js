@@ -1,28 +1,39 @@
 import { query, mutation } from "./_generated/server";
 import { v } from "convex/values";
+import { getCurrentUser } from "./auth";
 
 export const getWishlist = query({
-  args: { userId: v.string() }, // Fallback string for now
-  handler: async (ctx, args) => {
-    return await ctx.db
+  args: {},
+  handler: async (ctx) => {
+    const user = await getCurrentUser(ctx);
+    const items = await ctx.db
       .query("wishlist")
-      .filter((q) => q.eq(q.field("userId"), args.userId))
+      .withIndex("by_userId", (q) => q.eq("userId", user._id))
       .collect();
+
+    return await Promise.all(
+      items.map(async (item) => ({
+        ...item,
+        product: await ctx.db.get(item.productId),
+      }))
+    );
   },
 });
 
 export const addToWishlist = mutation({
-  args: { userId: v.string(), productId: v.id("products") },
+  args: { productId: v.id("products") },
   handler: async (ctx, args) => {
+    const user = await getCurrentUser(ctx);
     const existing = await ctx.db
       .query("wishlist")
-      .filter((q) => q.eq(q.field("userId"), args.userId))
-      .filter((q) => q.eq(q.field("productId"), args.productId))
-      .first();
+      .withIndex("by_userId_and_productId", (q) =>
+        q.eq("userId", user._id).eq("productId", args.productId)
+      )
+      .unique();
 
     if (!existing) {
       await ctx.db.insert("wishlist", {
-        userId: args.userId,
+        userId: user._id,
         productId: args.productId,
       });
       return { status: "added" };
@@ -32,17 +43,20 @@ export const addToWishlist = mutation({
 });
 
 export const removeFromWishlist = mutation({
-  args: { userId: v.string(), productId: v.id("products") },
+  args: { productId: v.id("products") },
   handler: async (ctx, args) => {
+    const user = await getCurrentUser(ctx);
     const existing = await ctx.db
       .query("wishlist")
-      .filter((q) => q.eq(q.field("userId"), args.userId))
-      .filter((q) => q.eq(q.field("productId"), args.productId))
-      .first();
+      .withIndex("by_userId_and_productId", (q) =>
+        q.eq("userId", user._id).eq("productId", args.productId)
+      )
+      .unique();
 
     if (existing) {
       await ctx.db.delete(existing._id);
       return { status: "removed" };
     }
+    return { status: "missing" };
   },
 });

@@ -36,7 +36,7 @@ const paymentOptions = [
 ]
 
 export default function CheckoutPage() {
-  const { cartItems, cartTotal, clearCart, deviceId } = useCart()
+  const { cartItems, cartTotal, clearCart } = useCart()
   const navigate = useNavigate()
   const placeOrder = useMutation(api.orders.createOrder)
 
@@ -128,7 +128,6 @@ export default function CheckoutPage() {
 
     try {
       const { orderNumber } = await placeOrder({
-        userId: deviceId,
         orderItems,
         subtotal: cartTotal,
         shipping,
@@ -159,7 +158,7 @@ export default function CheckoutPage() {
           total,
         },
       })
-    } catch (error) {
+    } catch {
       setApiError('Unable to place your order. Please try again later.')
     } finally {
       setIsSubmitting(false)

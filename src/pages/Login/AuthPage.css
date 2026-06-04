@@ -1,0 +1,64 @@
+.auth-page {
+  min-height: calc(100vh - 84px);
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(360px, 1fr);
+  align-items: center;
+  gap: 48px;
+  padding: 56px 24px;
+  background:
+    radial-gradient(circle at 18% 20%, rgba(212, 175, 55, 0.18), transparent 28%),
+    linear-gradient(135deg, #fffaf7 0%, #ffffff 52%, rgba(183, 110, 121, 0.12) 100%);
+}
+
+.auth-copy h1 {
+  max-width: 620px;
+  margin: 10px 0 18px;
+  font-size: clamp(2.4rem, 6vw, 4.8rem);
+  line-height: 1;
+  color: #2b2b2b;
+}
+
+.auth-copy p:not(.section-eyebrow) {
+  max-width: 560px;
+  color: var(--text-soft);
+  font-size: 1.06rem;
+  line-height: 1.8;
+}
+
+.auth-card-shell {
+  justify-self: center;
+  width: min(100%, 460px);
+}
+
+.clerk-card-box {
+  width: 100%;
+}
+
+.clerk-card {
+  border: 1px solid rgba(183, 110, 121, 0.18);
+  border-radius: 8px;
+  box-shadow: 0 28px 80px rgba(43, 43, 43, 0.12);
+}
+
+.clerk-title {
+  color: #2b2b2b;
+}
+
+.clerk-subtitle {
+  color: var(--muted);
+}
+
+.clerk-primary-button {
+  background: #b76e79;
+}
+
+.clerk-link {
+  color: #b76e79;
+}
+
+@media (max-width: 860px) {
+  .auth-page {
+    grid-template-columns: 1fr;
+    padding: 36px 18px;
+  }
+}

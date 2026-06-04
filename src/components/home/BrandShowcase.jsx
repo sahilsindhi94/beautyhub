@@ -9,7 +9,7 @@ export default function BrandShowcase() {
         <h2>Designer names trusted by beauty connoisseurs.</h2>
       </div>
       <div className="brand-row">
-        {brands.map((brand, index) => (
+        {brands.map((brand) => (
           <motion.div
             key={brand.name}
             className="brand-item"

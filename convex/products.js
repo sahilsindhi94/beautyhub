@@ -1,5 +1,6 @@
 import { query, mutation } from "./_generated/server";
 import { v } from "convex/values";
+import { getCurrentUser, requireManagerOrAdmin } from "./auth";
 
 // Queries
 
@@ -15,7 +16,7 @@ export const getFeaturedProducts = query({
   handler: async (ctx) => {
     return await ctx.db
       .query("products")
-      .filter((q) => q.eq(q.field("featured"), true))
+      .withIndex("by_featured", (q) => q.eq("featured", true))
       .order("desc")
       .collect();
   },
@@ -33,7 +34,7 @@ export const getProductsByCategory = query({
   handler: async (ctx, args) => {
     return await ctx.db
       .query("products")
-      .filter((q) => q.eq(q.field("category"), args.category))
+      .withIndex("by_category", (q) => q.eq("category", args.category))
       .order("desc")
       .collect();
   },
@@ -71,6 +72,8 @@ export const createProduct = mutation({
     featured: v.boolean(),
   },
   handler: async (ctx, args) => {
+    const user = await getCurrentUser(ctx);
+    requireManagerOrAdmin(user);
     const productId = await ctx.db.insert("products", args);
     return productId;
   },
@@ -91,6 +94,8 @@ export const updateProduct = mutation({
     featured: v.optional(v.boolean()),
   },
   handler: async (ctx, args) => {
+    const user = await getCurrentUser(ctx);
+    requireManagerOrAdmin(user);
     const { id, ...updates } = args;
     await ctx.db.patch(id, updates);
     return id;
@@ -100,6 +105,8 @@ export const updateProduct = mutation({
 export const deleteProduct = mutation({
   args: { id: v.id("products") },
   handler: async (ctx, args) => {
+    const user = await getCurrentUser(ctx);
+    requireManagerOrAdmin(user);
     await ctx.db.delete(args.id);
   },
 });

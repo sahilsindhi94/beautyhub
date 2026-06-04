@@ -13,34 +13,47 @@ export default defineSchema({
     rating: v.number(),
     stock: v.number(),
     featured: v.boolean(),
-  }),
+  })
+    .index("by_category", ["category"])
+    .index("by_featured", ["featured"]),
 
   categories: defineTable({
     name: v.string(),
     image: v.string(),
     slug: v.string(),
-  }),
+  }).index("by_slug", ["slug"]),
 
   wishlist: defineTable({
-    userId: v.id("users"), // Assuming reference to users table
+    userId: v.union(v.id("users"), v.string()),
     productId: v.id("products"),
-  }),
+  })
+    .index("by_userId", ["userId"])
+    .index("by_userId_and_productId", ["userId", "productId"]),
 
   cart: defineTable({
-    userId: v.id("users"),
+    userId: v.union(v.id("users"), v.string()),
     productId: v.id("products"),
     quantity: v.number(),
-  }),
+  })
+    .index("by_userId", ["userId"])
+    .index("by_userId_and_productId", ["userId", "productId"]),
 
   users: defineTable({
+    clerkId: v.string(),
+    tokenIdentifier: v.string(),
     name: v.string(),
     email: v.string(),
-    role: v.optional(v.string()), // e.g., 'admin', 'customer'
+    role: v.union(v.literal("admin"), v.literal("manager"), v.literal("customer")),
+    isActive: v.boolean(),
     image: v.optional(v.string()),
-  }),
+    createdAt: v.number(),
+  })
+    .index("by_clerkId", ["clerkId"])
+    .index("by_tokenIdentifier", ["tokenIdentifier"])
+    .index("by_email", ["email"]),
 
   orders: defineTable({
-    userId: v.string(),
+    userId: v.optional(v.union(v.id("users"), v.string(), v.null())),
     orderNumber: v.string(),
     orderItems: v.array(
       v.object({
@@ -71,5 +84,5 @@ export default defineSchema({
     paymentMethod: v.string(),
     status: v.string(),
     createdAt: v.number(),
-  }),
+  }).index("by_userId", ["userId"]),
 });

@@ -3,6 +3,9 @@ import { NavLink, Link } from 'react-router-dom'
 import { useCart } from '../../context/CartContext'
 import { useWishlist } from '../../context/WishlistContext'
 import { motion } from 'framer-motion'
+import { SignedIn, SignedOut, SignOutButton, UserButton } from '@clerk/clerk-react'
+import { useCurrentUser } from '../../hooks/useCurrentUser'
+import { isClerkConfigured } from '../../auth/clerkConfig'
 
 const navItems = [
   { to: '/', label: 'Home' },
@@ -19,6 +22,7 @@ export default function Navbar() {
   
   const { itemCount } = useCart()
   const { wishlistItems } = useWishlist()
+  const currentUser = useCurrentUser()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 16)
@@ -78,9 +82,42 @@ export default function Navbar() {
             )}
           </Link>
           
-          <Link to="/login" className="button button-secondary nav-login" onClick={() => setIsOpen(false)}>
-            Login
-          </Link>
+          {isClerkConfigured ? (
+            <>
+              <SignedOut>
+                <Link to="/login" className="button button-secondary nav-login" onClick={() => setIsOpen(false)}>
+                  Login
+                </Link>
+                <Link to="/register" className="button button-primary nav-login" onClick={() => setIsOpen(false)}>
+                  Register
+                </Link>
+              </SignedOut>
+
+              <SignedIn>
+                {(currentUser?.role === 'admin' || currentUser?.role === 'manager') && (
+                  <Link to="/admin" className="button button-secondary nav-login" onClick={() => setIsOpen(false)}>
+                    {currentUser.role === 'admin' ? 'Admin Dashboard' : 'Management Panel'}
+                  </Link>
+                )}
+                <Link to="/profile" className="button button-secondary nav-login" onClick={() => setIsOpen(false)}>
+                  Profile
+                </Link>
+                <Link to="/orders" className="button button-secondary nav-login" onClick={() => setIsOpen(false)}>
+                  Orders
+                </Link>
+                <SignOutButton redirectUrl="/login">
+                  <button type="button" className="button button-secondary nav-login">
+                    Logout
+                  </button>
+                </SignOutButton>
+                <UserButton afterSignOutUrl="/login" />
+              </SignedIn>
+            </>
+          ) : (
+            <Link to="/register" className="button button-primary nav-login" onClick={() => setIsOpen(false)}>
+              Auth Setup
+            </Link>
+          )}
         </div>
         <button
           type="button"
@@ -105,6 +142,37 @@ export default function Navbar() {
             {item.label}
           </NavLink>
         ))}
+        {isClerkConfigured ? (
+          <>
+            <SignedOut>
+              <Link to="/login" className="nav-link" onClick={() => setIsOpen(false)}>
+                Login
+              </Link>
+              <Link to="/register" className="nav-link" onClick={() => setIsOpen(false)}>
+                Register
+              </Link>
+            </SignedOut>
+            <SignedIn>
+              {(currentUser?.role === 'admin' || currentUser?.role === 'manager') && (
+                <Link to="/admin" className="nav-link" onClick={() => setIsOpen(false)}>
+                  {currentUser.role === 'admin' ? 'Admin Dashboard' : 'Management Panel'}
+                </Link>
+              )}
+              <Link to="/profile" className="nav-link" onClick={() => setIsOpen(false)}>
+                Profile
+              </Link>
+              <SignOutButton redirectUrl="/login">
+                <button type="button" className="nav-link mobile-signout" onClick={() => setIsOpen(false)}>
+                  Logout
+                </button>
+              </SignOutButton>
+            </SignedIn>
+          </>
+        ) : (
+          <Link to="/register" className="nav-link" onClick={() => setIsOpen(false)}>
+            Auth Setup
+          </Link>
+        )}
       </div>
     </header>
   )

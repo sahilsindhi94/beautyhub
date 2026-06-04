@@ -2,14 +2,12 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { useQuery } from 'convex/react'
 import { api } from '../../../convex/_generated/api'
-import { useCart } from '../../context/CartContext'
 import StatusBadge from '../../components/common/StatusBadge'
 import { formatCurrency, formatOrderDate } from '../../utils/currency'
 import './OrdersPage.css'
 
 export default function OrdersPage() {
-  const { deviceId } = useCart()
-  const orders = useQuery(api.orders.getOrders, { userId: deviceId })
+  const orders = useQuery(api.orders.getOrders)
 
   if (orders === undefined) {
     return (

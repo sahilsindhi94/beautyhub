@@ -4,6 +4,8 @@ import { useQuery } from 'convex/react'
 import { api } from '../../../convex/_generated/api'
 import { motion } from 'framer-motion'
 import RelatedProducts from './RelatedProducts'
+import { useCart } from '../../context/CartContext'
+import { useWishlist } from '../../context/WishlistContext'
 import './ProductDetailsPage.css'
 
 function RatingStars({ rating }) {
@@ -16,6 +18,8 @@ function RatingStars({ rating }) {
 
 export default function ProductDetailsPage() {
   const { id } = useParams()
+  const { addToCart } = useCart()
+  const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist()
   
   // Use useQuery with conditional skipping/handling or cast id properly
   const product = useQuery(api.products.getProductById, { productId: id })
@@ -61,6 +65,7 @@ export default function ProductDetailsPage() {
   }
 
   const discountAmount = product.oldPrice ? Math.round((1 - product.price / product.oldPrice) * 100) : 0
+  const inWishlist = isInWishlist(product._id)
 
   return (
     <section className="page page-details">
@@ -112,11 +117,21 @@ export default function ProductDetailsPage() {
             <p className="details-description">{product.description}</p>
 
             <div className="details-actions">
-              <button className="button button-primary button-large" disabled={product.stock === 0}>
+              <button
+                className="button button-primary button-large"
+                disabled={product.stock === 0}
+                onClick={() => addToCart(product)}
+              >
                 Add to Cart
               </button>
-              <button className="button button-outline button-icon" aria-label="Add to Wishlist">
-                ♥
+              <button
+                className="button button-outline button-icon"
+                aria-label={inWishlist ? 'Remove from Wishlist' : 'Add to Wishlist'}
+                onClick={() =>
+                  inWishlist ? removeFromWishlist(product._id) : addToWishlist(product)
+                }
+              >
+                {inWishlist ? '♥' : '♡'}
               </button>
             </div>
             

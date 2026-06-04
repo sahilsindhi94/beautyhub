@@ -1,0 +1,58 @@
+.admin-shell {
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  gap: 24px;
+  padding-block: 32px;
+}
+
+.admin-sidebar,
+.admin-panel {
+  background: #ffffff;
+  border: 1px solid rgba(183, 110, 121, 0.16);
+  border-radius: 8px;
+  box-shadow: 0 18px 50px rgba(43, 43, 43, 0.07);
+}
+
+.admin-sidebar {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  padding: 20px;
+}
+
+.admin-sidebar h2 {
+  margin: 0 0 12px;
+  color: var(--text);
+}
+
+.admin-link {
+  padding: 12px 14px;
+  border-radius: 8px;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.admin-link.active,
+.admin-link:hover {
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.admin-panel {
+  min-height: 360px;
+  padding: 32px;
+}
+
+.admin-panel h1 {
+  margin: 8px 0 12px;
+}
+
+@media (max-width: 820px) {
+  .admin-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-sidebar {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

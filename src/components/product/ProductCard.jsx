@@ -2,13 +2,24 @@ import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { useCart } from '../../context/CartContext'
 import { useWishlist } from '../../context/WishlistContext'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+
+const FALLBACK_IMAGE = 'https://placehold.co/600x600/f5f0ee/b76e79?text=Image+Not+Found'
 
 export default function ProductCard({ product, index }) {
   const { addToCart } = useCart()
   const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist()
   const [added, setAdded] = useState(false)
+  const [imgUrl, setImgUrl] = useState(product.image)
   const inWishlist = isInWishlist(product._id)
+
+  useEffect(() => {
+    const img = new Image();
+    img.src = product.image;
+    img.onerror = () => {
+      setImgUrl(FALLBACK_IMAGE)
+    };
+  }, [product.image])
 
   const productVariants = {
     hidden: { opacity: 0, y: 24 },
@@ -48,7 +59,7 @@ export default function ProductCard({ product, index }) {
       whileHover={{ y: -6 }}
     >
       <Link to={`/products/${product._id}`} className="product-thumb-link" style={{ display: 'block', height: '100%' }}>
-        <div className="product-thumb" style={{ backgroundImage: `url(${product.image})` }}>
+        <div className="product-thumb" style={{ backgroundImage: `url(${imgUrl})` }}>
           {product.oldPrice && (
             <span className="discount-badge">
               {Math.round((1 - product.price / product.oldPrice) * 100)}% OFF

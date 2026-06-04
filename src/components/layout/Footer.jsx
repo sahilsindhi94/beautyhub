@@ -26,11 +26,6 @@ export default function Footer() {
           <h3>Contact</h3>
           <p className="footer-contact">support@beautyhub.com</p>
           <p className="footer-contact">+91 98765 43210</p>
-          <div className="footer-social" aria-label="Social media links">
-            <Link to="/">F</Link>
-            <Link to="/">I</Link>
-            <Link to="/">T</Link>
-          </div>
         </div>
       </div>
     </footer>

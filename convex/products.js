@@ -51,7 +51,8 @@ export const searchProducts = query({
     return products.filter(
       (p) => 
         p.name.toLowerCase().includes(queryLower) || 
-        p.brand.toLowerCase().includes(queryLower)
+        p.brand.toLowerCase().includes(queryLower) ||
+        p.category.toLowerCase().includes(queryLower)
     );
   },
 });

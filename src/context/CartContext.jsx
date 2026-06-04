@@ -2,7 +2,6 @@
 import { createContext, useContext, useMemo, useState } from 'react'
 import { useConvexAuth, useMutation, useQuery } from 'convex/react'
 import { api } from '../../convex/_generated/api'
-import { isClerkConfigured } from '../auth/clerkConfig'
 
 const CartContext = createContext()
 
@@ -152,7 +151,10 @@ function DemoCartProvider({ children }) {
   )
 }
 
-export const CartProvider = isClerkConfigured ? ConfiguredCartProvider : DemoCartProvider
+export function CartProvider(props) {
+  const { isAuthenticated } = useConvexAuth()
+  return isAuthenticated ? <ConfiguredCartProvider {...props} /> : <DemoCartProvider {...props} />
+}
 
 export function useCart() {
   const context = useContext(CartContext)

@@ -247,3 +247,4 @@ export const seedProducts = mutation({
     return `Seeded ${initialProducts.length} products successfully.`;
   },
 });
+

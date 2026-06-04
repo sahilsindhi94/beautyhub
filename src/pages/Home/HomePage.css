@@ -3,8 +3,8 @@
 }
 
 .announcement-bar {
-  background: linear-gradient(90deg, #b76e79 0%, #f8e8ea 100%);
-  color: #2b2b2b;
+  background: var(--text);
+  color: var(--highlight);
   text-align: center;
   padding: 12px 24px;
 }
@@ -63,11 +63,12 @@
   letter-spacing: 0.35em;
   font-size: 0.85rem;
   margin-bottom: 18px;
-  color: #f8e8ea;
+  color: var(--highlight);
 }
 
 .hero-copy h1 {
-  font-size: clamp(2.85rem, 4vw, 4.8rem);
+  font-family: var(--serif);
+  font-size: clamp(3rem, 4.5vw, 5.2rem);
   line-height: 1.02;
   margin: 0 0 20px;
   color: #ffffff;
@@ -111,15 +112,16 @@
 }
 
 .section-eyebrow {
-  color: #b76e79;
-  font-weight: 700;
-  letter-spacing: 0.18em;
+  color: var(--accent);
+  font-weight: 600;
+  letter-spacing: 0.25em;
   text-transform: uppercase;
   font-size: 0.8rem;
 }
 
 .section-header-wrap h2 {
-  font-size: clamp(2rem, 3vw, 3rem);
+  font-family: var(--serif);
+  font-size: clamp(2.2rem, 3.5vw, 3.2rem);
   line-height: 1.08;
   margin: 0;
   color: #2b2b2b;
@@ -196,17 +198,19 @@
 }
 
 .product-card {
-  background: #ffffff;
-  border-radius: 28px;
+  background: var(--surface);
+  border-radius: 4px;
+  border: 1px solid var(--border);
   overflow: hidden;
-  box-shadow: 0 20px 60px rgba(43, 43, 43, 0.08);
+  box-shadow: 0 10px 40px rgba(31, 31, 31, 0.04);
   display: flex;
   flex-direction: column;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
 }
 
 .product-card:hover {
-  box-shadow: 0 32px 80px rgba(43, 43, 43, 0.12);
+  transform: translateY(-8px);
+  box-shadow: 0 20px 50px rgba(31, 31, 31, 0.1);
 }
 
 .product-thumb {
@@ -232,8 +236,8 @@
 .discount-badge {
   top: 18px;
   left: 18px;
-  background: rgba(212, 175, 55, 0.94);
-  color: #2b2b2b;
+  background: var(--highlight);
+  color: var(--text);
 }
 
 .wishlist-button {
@@ -241,20 +245,25 @@
   right: 18px;
   width: 42px;
   height: 42px;
-  background: rgba(255, 255, 255, 0.88);
-  color: #b76e79;
+  background: rgba(255, 255, 255, 0.95);
+  color: var(--muted);
   border: none;
   cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.wishlist-button:hover {
+  color: var(--accent);
 }
 
 .product-details {
-  padding: 24px;
+  padding: 28px 24px;
   display: grid;
   gap: 14px;
 }
 
 .product-brand {
-  color: #b76e79;
+  color: var(--muted);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -263,8 +272,10 @@
 
 .product-details h3 {
   margin: 0;
-  font-size: 1.12rem;
-  color: #2b2b2b;
+  font-family: var(--serif);
+  font-size: 1.25rem;
+  color: var(--text);
+  font-weight: 600;
 }
 
 .product-rating {
@@ -290,12 +301,13 @@
 
 .current-price {
   font-size: 1.15rem;
-  font-weight: 700;
-  color: #2b2b2b;
+  font-weight: 600;
+  color: var(--text);
 }
 
 .old-price {
-  color: #7a6f79;
+  color: var(--muted);
+  font-size: 0.9rem;
   text-decoration: line-through;
 }
 
@@ -308,11 +320,11 @@
 }
 
 .trust-card {
-  background: #ffffff;
-  border: 1px solid rgba(43, 43, 43, 0.06);
-  border-radius: 26px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
   padding: 28px;
-  box-shadow: 0 18px 38px rgba(43, 43, 43, 0.06);
+  box-shadow: 0 10px 40px rgba(31, 31, 31, 0.04);
   display: grid;
   gap: 18px;
 }
@@ -341,14 +353,14 @@
 }
 
 .brand-item {
-  background: #ffffff;
-  border-radius: 24px;
+  background: var(--surface);
+  border-radius: 4px;
   padding: 24px 20px;
   display: grid;
   place-items: center;
   gap: 14px;
   text-align: center;
-  border: 1px solid rgba(43, 43, 43, 0.06);
+  border: 1px solid var(--border);
 }
 
 .brand-item img {
@@ -368,10 +380,11 @@
 }
 
 .blog-card {
-  background: #ffffff;
-  border-radius: 30px;
+  background: var(--surface);
+  border-radius: 4px;
   overflow: hidden;
-  box-shadow: 0 24px 60px rgba(43, 43, 43, 0.08);
+  border: 1px solid var(--border);
+  box-shadow: 0 10px 40px rgba(31, 31, 31, 0.04);
   display: flex;
   flex-direction: column;
 }
@@ -410,10 +423,11 @@
 }
 
 .testimonial-card {
-  background: #ffffff;
-  border-radius: 30px;
+  background: var(--surface);
+  border-radius: 4px;
+  border: 1px solid var(--border);
   padding: 32px;
-  box-shadow: 0 24px 60px rgba(43, 43, 43, 0.08);
+  box-shadow: 0 10px 40px rgba(31, 31, 31, 0.04);
   display: grid;
   gap: 18px;
 }
@@ -456,14 +470,15 @@
 }
 
 .newsletter-card {
-  background: linear-gradient(135deg, rgba(183, 110, 121, 0.14), rgba(212, 175, 55, 0.08));
-  border-radius: 32px;
+  background: linear-gradient(135deg, rgba(196, 139, 159, 0.1), rgba(212, 175, 55, 0.05));
+  border-radius: 4px;
+  border: 1px solid var(--border);
   padding: 42px;
   display: grid;
   grid-template-columns: 1.2fr 0.8fr;
   gap: 32px;
   align-items: center;
-  box-shadow: 0 32px 80px rgba(43, 43, 43, 0.08);
+  box-shadow: 0 10px 40px rgba(31, 31, 31, 0.04);
 }
 
 .newsletter-card p {
@@ -500,7 +515,7 @@
 .instagram-item {
   position: relative;
   min-height: 240px;
-  border-radius: 28px;
+  border-radius: 4px;
   overflow: hidden;
   background-size: cover;
   background-position: center;

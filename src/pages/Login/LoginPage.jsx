@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { useAuthActions } from '@convex-dev/auth/react'
 import './AuthPage.css'
@@ -10,7 +10,9 @@ export default function LoginPage() {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
+  const location = useLocation()
   const { signIn } = useAuthActions()
+  const from = location.state?.from?.pathname || '/'
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -24,7 +26,7 @@ export default function LoginPage() {
     setLoading(true)
     try {
       await signIn('password', { email, password, flow: 'signIn' })
-      navigate('/')
+      navigate(from, { replace: true })
     } catch (err) {
       console.error('Sign in error:', err)
       // Generic error message for security, or specific if known. 
@@ -102,7 +104,7 @@ export default function LoginPage() {
 
             <div style={{ marginTop: '24px', fontSize: '0.9rem', textAlign: 'center', color: '#666' }}>
               Don't have an account?{' '}
-              <Link to="/register" className="clerk-link" style={{ fontWeight: 500, textDecoration: 'none' }}>
+              <Link to="/register" state={{ from: location.state?.from }} className="clerk-link" style={{ fontWeight: 500, textDecoration: 'none' }}>
                 Sign up
               </Link>
             </div>

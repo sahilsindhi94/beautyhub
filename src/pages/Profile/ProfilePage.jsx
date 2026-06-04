@@ -1,5 +1,6 @@
+import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { useQuery } from 'convex/react'
+import { useQuery, useMutation } from 'convex/react'
 import { api } from '../../../convex/_generated/api'
 import AuthLoadingScreen from '../../components/auth/AuthLoadingScreen'
 import { formatOrderDate } from '../../utils/currency'
@@ -10,8 +11,12 @@ import './ProfilePage.css'
 export default function ProfilePage() {
   const user = useQuery(api.users.getCurrent)
   const stats = useQuery(api.users.getProfileStats)
+  const updateProfile = useMutation(api.users.updateProfile)
   const { signOut } = useAuthActions()
   const navigate = useNavigate()
+
+  const [isEditing, setIsEditing] = useState(false)
+  const [editName, setEditName] = useState('')
 
   if (user === undefined || stats === undefined) {
     return <AuthLoadingScreen message="Loading your profile..." />
@@ -24,6 +29,18 @@ export default function ProfilePage() {
   const handleLogout = async () => {
     await signOut()
     navigate('/')
+  }
+
+  const handleEditClick = () => {
+    setEditName(user.name)
+    setIsEditing(true)
+  }
+
+  const handleSave = async () => {
+    if (editName.trim() && editName !== user.name) {
+      await updateProfile({ name: editName.trim() })
+    }
+    setIsEditing(false)
   }
 
   return (
@@ -42,7 +59,24 @@ export default function ProfilePage() {
           />
           <div className="profile-main">
             <p className="section-eyebrow">My Profile</p>
-            <h1>{user.name}</h1>
+            {isEditing ? (
+              <div style={{ display: 'flex', gap: '8px', alignItems: 'center', margin: '14px 0 8px' }}>
+                <input 
+                  type="text" 
+                  value={editName} 
+                  onChange={(e) => setEditName(e.target.value)} 
+                  style={{ padding: '8px 12px', borderRadius: '6px', border: '1px solid #e0e0e0', fontSize: '1rem', outlineColor: 'var(--accent)' }}
+                  autoFocus
+                />
+                <button onClick={handleSave} className="button button-primary" style={{ padding: '8px 16px' }}>Save</button>
+                <button onClick={() => setIsEditing(false)} className="button button-secondary" style={{ padding: '8px 16px' }}>Cancel</button>
+              </div>
+            ) : (
+              <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+                <h1 style={{ margin: '14px 0 8px' }}>{user.name}</h1>
+                <button onClick={handleEditClick} style={{ background: 'none', border: 'none', color: 'var(--accent)', cursor: 'pointer', textDecoration: 'underline', fontSize: '0.9rem', padding: 0 }}>Edit</button>
+              </div>
+            )}
             <p>{user.email}</p>
           </div>
           <button type="button" className="button button-primary" onClick={handleLogout} style={{ marginTop: '24px' }}>

@@ -2,7 +2,6 @@
 import { createContext, useContext, useMemo, useState } from 'react'
 import { useConvexAuth, useMutation, useQuery } from 'convex/react'
 import { api } from '../../convex/_generated/api'
-import { isClerkConfigured } from '../auth/clerkConfig'
 
 const WishlistContext = createContext()
 
@@ -104,7 +103,10 @@ function DemoWishlistProvider({ children }) {
   )
 }
 
-export const WishlistProvider = isClerkConfigured ? ConfiguredWishlistProvider : DemoWishlistProvider
+export function WishlistProvider(props) {
+  const { isAuthenticated } = useConvexAuth()
+  return isAuthenticated ? <ConfiguredWishlistProvider {...props} /> : <DemoWishlistProvider {...props} />
+}
 
 export function useWishlist() {
   const context = useContext(WishlistContext)

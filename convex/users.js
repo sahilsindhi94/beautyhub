@@ -1,4 +1,4 @@
-import { query } from "./_generated/server";
+import { query, mutation } from "./_generated/server";
 import { v } from "convex/values";
 import { getCurrentUser } from "./auth";
 
@@ -42,5 +42,13 @@ export const getProfileStats = query({
       wishlistCount: wishlist.length,
       cartCount: cart.reduce((count, item) => count + item.quantity, 0),
     };
+  },
+});
+
+export const updateProfile = mutation({
+  args: { name: v.string() },
+  handler: async (ctx, args) => {
+    const user = await getCurrentUser(ctx);
+    await ctx.db.patch(user._id, { name: args.name });
   },
 });

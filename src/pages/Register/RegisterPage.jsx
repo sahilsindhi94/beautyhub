@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { useAuthActions } from '@convex-dev/auth/react'
 import '../Login/AuthPage.css'
@@ -11,7 +11,9 @@ export default function RegisterPage() {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
+  const location = useLocation()
   const { signIn } = useAuthActions()
+  const from = location.state?.from?.pathname || '/'
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -31,7 +33,7 @@ export default function RegisterPage() {
     try {
       // Pass flow: 'signUp' to register a new user
       await signIn('password', { email, password, flow: 'signUp', name })
-      navigate('/')
+      navigate(from, { replace: true })
     } catch (err) {
       console.error('Sign up error:', err)
       setError(err?.message || 'Failed to create account. Email may already be in use.')

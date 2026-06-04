@@ -1,11 +1,10 @@
 import { useEffect, useState } from 'react'
-import { NavLink, Link } from 'react-router-dom'
+import { NavLink, Link, useNavigate } from 'react-router-dom'
 import { useCart } from '../../context/CartContext'
 import { useWishlist } from '../../context/WishlistContext'
 import { motion } from 'framer-motion'
-import { SignedIn, SignedOut, SignOutButton, UserButton } from '@clerk/clerk-react'
 import { useCurrentUser } from '../../hooks/useCurrentUser'
-import { isClerkConfigured } from '../../auth/clerkConfig'
+import { useAuthActions } from '@convex-dev/auth/react'
 
 const navItems = [
   { to: '/', label: 'Home' },
@@ -23,6 +22,8 @@ export default function Navbar() {
   const { itemCount } = useCart()
   const { wishlistItems } = useWishlist()
   const currentUser = useCurrentUser()
+  const { signOut } = useAuthActions()
+  const navigate = useNavigate()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 16)
@@ -30,6 +31,12 @@ export default function Navbar() {
     onScroll()
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
+
+  const handleLogout = async () => {
+    setIsOpen(false)
+    await signOut()
+    navigate('/')
+  }
 
   return (
     <header className={`site-navbar ${scrolled ? 'scrolled' : ''} ${isOpen ? 'is-open' : ''}`}>
@@ -82,41 +89,24 @@ export default function Navbar() {
             )}
           </Link>
           
-          {isClerkConfigured ? (
+          {!currentUser ? (
             <>
-              <SignedOut>
-                <Link to="/login" className="button button-secondary nav-login" onClick={() => setIsOpen(false)}>
-                  Login
-                </Link>
-                <Link to="/register" className="button button-primary nav-login" onClick={() => setIsOpen(false)}>
-                  Register
-                </Link>
-              </SignedOut>
-
-              <SignedIn>
-                {(currentUser?.role === 'admin' || currentUser?.role === 'manager') && (
-                  <Link to="/admin" className="button button-secondary nav-login" onClick={() => setIsOpen(false)}>
-                    {currentUser.role === 'admin' ? 'Admin Dashboard' : 'Management Panel'}
-                  </Link>
-                )}
-                <Link to="/profile" className="button button-secondary nav-login" onClick={() => setIsOpen(false)}>
-                  Profile
-                </Link>
-                <Link to="/orders" className="button button-secondary nav-login" onClick={() => setIsOpen(false)}>
-                  Orders
-                </Link>
-                <SignOutButton redirectUrl="/login">
-                  <button type="button" className="button button-secondary nav-login">
-                    Logout
-                  </button>
-                </SignOutButton>
-                <UserButton afterSignOutUrl="/login" />
-              </SignedIn>
+              <Link to="/login" className="button button-secondary nav-login" onClick={() => setIsOpen(false)}>
+                Login
+              </Link>
+              <Link to="/register" className="button button-primary nav-login" onClick={() => setIsOpen(false)}>
+                Register
+              </Link>
             </>
           ) : (
-            <Link to="/register" className="button button-primary nav-login" onClick={() => setIsOpen(false)}>
-              Auth Setup
-            </Link>
+            <>
+              <Link to="/profile" className="button button-secondary nav-login" onClick={() => setIsOpen(false)}>
+                Profile
+              </Link>
+              <button type="button" className="button button-secondary nav-login" onClick={handleLogout}>
+                Logout
+              </button>
+            </>
           )}
         </div>
         <button
@@ -142,36 +132,24 @@ export default function Navbar() {
             {item.label}
           </NavLink>
         ))}
-        {isClerkConfigured ? (
+        {!currentUser ? (
           <>
-            <SignedOut>
-              <Link to="/login" className="nav-link" onClick={() => setIsOpen(false)}>
-                Login
-              </Link>
-              <Link to="/register" className="nav-link" onClick={() => setIsOpen(false)}>
-                Register
-              </Link>
-            </SignedOut>
-            <SignedIn>
-              {(currentUser?.role === 'admin' || currentUser?.role === 'manager') && (
-                <Link to="/admin" className="nav-link" onClick={() => setIsOpen(false)}>
-                  {currentUser.role === 'admin' ? 'Admin Dashboard' : 'Management Panel'}
-                </Link>
-              )}
-              <Link to="/profile" className="nav-link" onClick={() => setIsOpen(false)}>
-                Profile
-              </Link>
-              <SignOutButton redirectUrl="/login">
-                <button type="button" className="nav-link mobile-signout" onClick={() => setIsOpen(false)}>
-                  Logout
-                </button>
-              </SignOutButton>
-            </SignedIn>
+            <Link to="/login" className="nav-link" onClick={() => setIsOpen(false)}>
+              Login
+            </Link>
+            <Link to="/register" className="nav-link" onClick={() => setIsOpen(false)}>
+              Register
+            </Link>
           </>
         ) : (
-          <Link to="/register" className="nav-link" onClick={() => setIsOpen(false)}>
-            Auth Setup
-          </Link>
+          <>
+            <Link to="/profile" className="nav-link" onClick={() => setIsOpen(false)}>
+              Profile
+            </Link>
+            <button type="button" className="nav-link mobile-signout" onClick={handleLogout}>
+              Logout
+            </button>
+          </>
         )}
       </div>
     </header>

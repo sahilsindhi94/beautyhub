@@ -1,39 +1,29 @@
-import { SignOutButton, useUser } from '@clerk/clerk-react'
 import { motion } from 'framer-motion'
 import { useQuery } from 'convex/react'
 import { api } from '../../../convex/_generated/api'
 import AuthLoadingScreen from '../../components/auth/AuthLoadingScreen'
 import { formatOrderDate } from '../../utils/currency'
-import { isClerkConfigured } from '../../auth/clerkConfig'
+import { useAuthActions } from '@convex-dev/auth/react'
+import { useNavigate } from 'react-router-dom'
 import './ProfilePage.css'
 
 export default function ProfilePage() {
-  if (!isClerkConfigured) {
-    return (
-      <section className="page page-profile">
-        <div className="page-shell">
-          <div className="profile-card">
-            <div className="profile-main">
-              <p className="section-eyebrow">Demo Mode</p>
-              <h1>Clerk is not configured yet.</h1>
-              <p>Add your Clerk environment values and restart the dev server to view a real profile.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-    )
-  }
-
-  return <ConfiguredProfilePage />
-}
-
-function ConfiguredProfilePage() {
-  const { user: clerkUser } = useUser()
   const user = useQuery(api.users.getCurrent)
   const stats = useQuery(api.users.getProfileStats)
+  const { signOut } = useAuthActions()
+  const navigate = useNavigate()
 
-  if (user === undefined || stats === undefined || user === null) {
+  if (user === undefined || stats === undefined) {
     return <AuthLoadingScreen message="Loading your profile..." />
+  }
+
+  if (user === null) {
+    return null
+  }
+
+  const handleLogout = async () => {
+    await signOut()
+    navigate('/')
   }
 
   return (
@@ -46,7 +36,7 @@ function ConfiguredProfilePage() {
           transition={{ duration: 0.35 }}
         >
           <img
-            src={user.image || clerkUser?.imageUrl}
+            src={user.image || 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y'}
             alt={user.name || 'BeautyHub profile'}
             className="profile-avatar"
           />
@@ -54,31 +44,28 @@ function ConfiguredProfilePage() {
             <p className="section-eyebrow">My Profile</p>
             <h1>{user.name}</h1>
             <p>{user.email}</p>
-            <span className="role-pill">{user.role}</span>
           </div>
-          <SignOutButton redirectUrl="/login">
-            <button type="button" className="button button-primary">
-              Logout
-            </button>
-          </SignOutButton>
+          <button type="button" className="button button-primary" onClick={handleLogout} style={{ marginTop: '24px' }}>
+            Logout
+          </button>
         </motion.div>
 
         <div className="profile-stats">
           <div>
             <span>Member Since</span>
-            <strong>{formatOrderDate(user.createdAt)}</strong>
+            <strong>{user.createdAt ? formatOrderDate(user.createdAt) : 'Recently'}</strong>
           </div>
           <div>
             <span>Total Orders</span>
-            <strong>{stats.totalOrders}</strong>
+            <strong>{stats?.totalOrders || 0}</strong>
           </div>
           <div>
             <span>Wishlist Count</span>
-            <strong>{stats.wishlistCount}</strong>
+            <strong>{stats?.wishlistCount || 0}</strong>
           </div>
           <div>
             <span>Cart Count</span>
-            <strong>{stats.cartCount}</strong>
+            <strong>{stats?.cartCount || 0}</strong>
           </div>
         </div>
       </div>

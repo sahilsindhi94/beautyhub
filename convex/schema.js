@@ -1,7 +1,9 @@
 import { defineSchema, defineTable } from "convex/server";
 import { v } from "convex/values";
+import { authTables } from "@convex-dev/auth/server";
 
 export default defineSchema({
+  ...authTables,
   products: defineTable({
     name: v.string(),
     brand: v.string(),
@@ -39,18 +41,17 @@ export default defineSchema({
     .index("by_userId_and_productId", ["userId", "productId"]),
 
   users: defineTable({
-    clerkId: v.string(),
-    tokenIdentifier: v.string(),
     name: v.string(),
     email: v.string(),
-    role: v.union(v.literal("admin"), v.literal("manager"), v.literal("customer")),
-    isActive: v.boolean(),
     image: v.optional(v.string()),
-    createdAt: v.number(),
-  })
-    .index("by_clerkId", ["clerkId"])
-    .index("by_tokenIdentifier", ["tokenIdentifier"])
-    .index("by_email", ["email"]),
+    createdAt: v.number(), // using v.number() for standard compatibility
+    isActive: v.boolean(),
+    // Standard Convex Auth fields
+    emailVerificationTime: v.optional(v.number()),
+    phone: v.optional(v.string()),
+    phoneVerificationTime: v.optional(v.number()),
+    isAnonymous: v.optional(v.boolean()),
+  }).index("by_email", ["email"]),
 
   orders: defineTable({
     userId: v.optional(v.union(v.id("users"), v.string(), v.null())),

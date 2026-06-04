@@ -10,8 +10,9 @@
   top: 100px;
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 1.5rem;
+  border-radius: 4px;
+  padding: 2rem;
+  box-shadow: 0 10px 40px rgba(31, 31, 31, 0.03);
 }
 
 .filter-group {
@@ -23,19 +24,30 @@
 }
 
 .filter-group h3 {
-  font-size: 1rem;
-  margin-bottom: 1rem;
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  margin-bottom: 1.25rem;
   font-weight: 600;
+  color: var(--highlight);
+  letter-spacing: 0.05em;
 }
 
 .search-input {
   width: 100%;
-  padding: 0.75rem 1rem;
+  padding: 0.85rem 1.25rem;
   border: 1px solid var(--border);
-  border-radius: 8px;
-  background: var(--background);
-  color: var(--text-primary);
+  border-radius: 4px;
+  background: var(--surface);
+  color: var(--text);
   font-family: inherit;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: var(--highlight);
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.12);
 }
 
 .filter-list {
@@ -50,15 +62,15 @@
 .radio-label, .checkbox-label {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.6rem;
   cursor: pointer;
   font-size: 0.95rem;
-  color: var(--text-secondary);
-  transition: color 0.2s;
+  color: var(--muted);
+  transition: color 0.2s ease;
 }
 
 .radio-label:hover, .checkbox-label:hover {
-  color: var(--text-primary);
+  color: var(--text);
 }
 
 .products-header {
@@ -71,7 +83,10 @@
 }
 
 .products-header h2 {
-  font-size: 1.5rem;
+  font-family: var(--serif);
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--text);
   margin: 0;
 }
 
@@ -82,13 +97,21 @@
 }
 
 .sort-select {
-  padding: 0.5rem 1rem;
+  padding: 0.6rem 1.2rem;
   border: 1px solid var(--border);
-  border-radius: 6px;
+  border-radius: 4px;
   background: var(--surface);
-  color: var(--text-primary);
+  color: var(--text);
   font-family: inherit;
+  font-size: 0.95rem;
   cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.sort-select:focus {
+  outline: none;
+  border-color: var(--highlight);
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.12);
 }
 
 @media (max-width: 900px) {

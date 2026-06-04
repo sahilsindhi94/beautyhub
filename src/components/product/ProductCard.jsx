@@ -58,7 +58,7 @@ export default function ProductCard({ product, index }) {
       viewport={{ once: true, amount: 0.2 }}
       whileHover={{ y: -6 }}
     >
-      <Link to={`/products/${product._id}`} className="product-thumb-link" style={{ display: 'block', height: '100%' }}>
+      <Link to={`/products/${product._id}`} className="product-thumb-link" style={{ display: 'block' }}>
         <div className="product-thumb" style={{ backgroundImage: `url(${imgUrl})` }}>
           {product.oldPrice && (
             <span className="discount-badge">

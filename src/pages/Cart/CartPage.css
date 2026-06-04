@@ -3,8 +3,11 @@
 }
 
 .cart-title {
-  font-size: 2rem;
+  font-family: var(--serif);
+  font-size: 2.5rem;
+  font-weight: 600;
   margin-bottom: 2rem;
+  color: var(--text);
 }
 
 .cart-layout {
@@ -18,19 +21,24 @@
   text-align: center;
   padding: 6rem 2rem;
   background: var(--surface);
-  border-radius: 16px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  box-shadow: 0 10px 40px rgba(31, 31, 31, 0.03);
   max-width: 600px;
   margin: 0 auto;
 }
 
 .empty-icon {
   font-size: 4rem;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .cart-empty-state h2 {
-  font-size: 2rem;
+  font-family: var(--serif);
+  font-size: 2.2rem;
+  font-weight: 600;
   margin-bottom: 1rem;
+  color: var(--text);
 }
 
 .cart-empty-state p {
@@ -48,19 +56,20 @@
 .cart-item {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
-  padding: 1.5rem;
+  gap: 2rem;
+  padding: 2rem;
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 4px;
+  box-shadow: 0 10px 40px rgba(31, 31, 31, 0.02);
 }
 
 .cart-item-image {
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
   background-size: cover;
   background-position: center;
-  border-radius: 8px;
+  border-radius: 2px;
   flex-shrink: 0;
 }
 
@@ -71,17 +80,19 @@
 }
 
 .item-brand {
-  font-size: 0.8rem;
+  font-size: 0.85rem;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 1px;
-  color: var(--text-secondary);
+  letter-spacing: 0.1em;
+  color: var(--muted);
 }
 
 .item-name {
-  font-size: 1.1rem;
+  font-family: var(--serif);
+  font-size: 1.4rem;
   font-weight: 600;
-  margin: 0.2rem 0 0.5rem;
-  color: var(--text-primary);
+  margin: 0.4rem 0 0.6rem;
+  color: var(--text);
   text-decoration: none;
 }
 .item-name:hover {
@@ -89,7 +100,8 @@
 }
 
 .item-price {
-  font-weight: 500;
+  font-weight: 600;
+  color: var(--muted);
 }
 
 .cart-item-controls {
@@ -102,8 +114,9 @@
   display: flex;
   align-items: center;
   border: 1px solid var(--border);
-  border-radius: 6px;
+  border-radius: 4px;
   overflow: hidden;
+  background: var(--surface);
 }
 
 .quantity-control button {
@@ -172,15 +185,19 @@
 .order-summary {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 2rem;
+  border-radius: 4px;
+  padding: 2.5rem;
+  box-shadow: 0 10px 40px rgba(31, 31, 31, 0.04);
 }
 
 .order-summary h3 {
-  font-size: 1.25rem;
+  font-family: var(--serif);
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--text);
   margin-bottom: 1.5rem;
   border-bottom: 1px solid var(--border);
-  padding-bottom: 1rem;
+  padding-bottom: 1.25rem;
 }
 
 .summary-row {

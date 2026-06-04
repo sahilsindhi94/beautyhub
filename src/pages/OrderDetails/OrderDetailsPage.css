@@ -15,8 +15,9 @@
 .order-products-panel {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 24px;
-  padding: 1.75rem;
+  border-radius: 4px;
+  padding: 32px;
+  box-shadow: 0 10px 40px rgba(31, 31, 31, 0.04);
 }
 
 .detail-header {
@@ -29,7 +30,7 @@
 
 .order-label {
   margin: 0 0 0.5rem;
-  color: var(--text-soft);
+  color: var(--muted);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   font-size: 0.8rem;
@@ -38,7 +39,7 @@
 .detail-row {
   display: flex;
   justify-content: space-between;
-  color: var(--text-soft);
+  color: var(--muted);
   gap: 1rem;
   margin-bottom: 1rem;
 }
@@ -50,7 +51,12 @@
 
 .timeline-card h2,
 .order-products-panel h2 {
+  font-family: var(--serif);
+  font-size: 1.8rem;
+  font-weight: 600;
   margin-top: 0;
+  margin-bottom: 1.5rem;
+  color: var(--text);
 }
 
 .timeline-list {
@@ -63,7 +69,7 @@
   grid-template-columns: auto 1fr;
   gap: 1rem;
   align-items: center;
-  color: var(--text-soft);
+  color: var(--muted);
 }
 
 .timeline-step.active {
@@ -108,14 +114,15 @@
   gap: 1rem;
   align-items: center;
   padding: 1rem;
-  border-radius: 18px;
-  background: var(--accent-soft);
+  border-radius: 4px;
+  background: var(--surface);
+  border: 1px solid var(--border);
 }
 
 .product-image {
   width: 72px;
   height: 72px;
-  border-radius: 20px;
+  border-radius: 2px;
   background-size: cover;
   background-position: center;
 }
@@ -126,13 +133,15 @@
 }
 
 .product-name {
+  font-family: var(--serif);
+  font-size: 1.15rem;
   margin: 0;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .product-meta {
   margin: 0;
-  color: var(--text-soft);
+  color: var(--muted);
 }
 
 .product-price {

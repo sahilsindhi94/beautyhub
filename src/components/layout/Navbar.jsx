@@ -23,6 +23,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [showSearch, setShowSearch] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
+  const [profileDropdownOpen, setProfileDropdownOpen] = useState(false)
   
   const { itemCount } = useCart()
   const { wishlistItems } = useWishlist()
@@ -219,16 +220,64 @@ export default function Navbar() {
               </>
             ) : (
               <>
-                <Link to="/profile" onClick={() => setIsOpen(false)} style={{ display: 'flex', alignItems: 'center', gap: '8px', textDecoration: 'none' }}>
-                      {currentUser.image ? (
-                        <img src={currentUser.image} alt={currentUser.name} style={{ width: '28px', height: '28px', borderRadius: '50%', objectFit: 'cover' }} />
-                      ) : (
-                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" alt={currentUser.name || 'User'} style={{ width: '28px', height: '28px', borderRadius: '50%', objectFit: 'cover' }} />
-                      )}<span style={{ fontSize: '0.9rem', fontWeight: 500, color: 'var(--text)' }}>Profile</span>
-                </Link>
-                <button type="button" className="button nav-auth-btn" onClick={handleLogout}>
-                  Logout
+              <div className="profile-dropdown-container" style={{ position: 'relative' }}>
+                <button 
+                  type="button"
+                  onClick={() => setProfileDropdownOpen(!profileDropdownOpen)} 
+                  style={{ display: 'flex', alignItems: 'center', gap: '8px', background: 'none', border: 'none', cursor: 'pointer', padding: '4px' }}
+                >
+                  {currentUser.image ? (
+                    <img src={currentUser.image} alt={currentUser.name} style={{ width: '36px', height: '36px', borderRadius: '50%', objectFit: 'cover', border: '2px solid var(--primary-soft)' }} />
+                  ) : (
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" alt={currentUser.name || 'User'} style={{ width: '36px', height: '36px', borderRadius: '50%', objectFit: 'cover', border: '2px solid var(--primary-soft)' }} />
+                  )}
                 </button>
+                <AnimatePresence>
+                  {profileDropdownOpen && (
+                    <motion.div 
+                      initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                      transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+                      className="glass-panel"
+                      style={{ 
+                        position: 'absolute', 
+                        top: 'calc(100% + 12px)', 
+                        right: 0, 
+                        minWidth: '220px', 
+                        borderRadius: '16px', 
+                        padding: '8px', 
+                        display: 'flex', 
+                        flexDirection: 'column', 
+                        gap: '4px',
+                        zIndex: 100,
+                        boxShadow: '0 20px 40px rgba(0,0,0,0.1)'
+                      }}
+                    >
+                      <div style={{ padding: '12px', borderBottom: '1px solid rgba(0,0,0,0.05)', marginBottom: '4px' }}>
+                        <p style={{ fontWeight: 600, margin: 0, color: 'var(--text)' }}>{currentUser.name || 'Beauty Insider'}</p>
+                        <p style={{ fontSize: '0.85rem', color: 'var(--text-soft)', margin: 0 }}>{currentUser.email || 'Welcome back!'}</p>
+                      </div>
+                      <Link 
+                        to="/profile" 
+                        onClick={() => setProfileDropdownOpen(false)}
+                        className="nav-link"
+                        style={{ padding: '10px 12px', borderRadius: '8px', display: 'block', textDecoration: 'none' }}
+                      >
+                        Profile Settings
+                      </Link>
+                      <button 
+                        type="button" 
+                        onClick={() => { setProfileDropdownOpen(false); handleLogout(); }}
+                        className="nav-link"
+                        style={{ padding: '10px 12px', borderRadius: '8px', background: 'none', border: 'none', width: '100%', textAlign: 'left', cursor: 'pointer', color: 'var(--primary)' }}
+                      >
+                        Log Out
+                      </button>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
               </>
             )}
           </div>
@@ -320,7 +369,7 @@ export default function Navbar() {
                       type="button" 
                       className="nav-link" 
                       onClick={handleLogout}
-                      style={{ background: 'none', border: 'none', width: '100%', textAlign: 'left', cursor: 'pointer', fontFamily: 'inherit', padding: '12px 0' }}
+                      style={{ background: 'none', border: 'none', width: '100%', textAlign: 'center', cursor: 'pointer', fontFamily: 'inherit', padding: '12px 0' }}
                     >
                       Logout
                     </button>

@@ -73,7 +73,8 @@ export default function ContactSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            style={{ display: 'flex', flexDirection: 'column', gap: '24px', background: 'var(--bg-soft)', padding: 'clamp(24px, 5vw, 48px)', borderRadius: '24px', border: '1px solid var(--border)', boxShadow: '0 10px 40px rgba(0,0,0,0.03)' }}
+            style={{ display: 'flex', flexDirection: 'column', gap: '24px', padding: 'clamp(24px, 5vw, 48px)', borderRadius: '24px', boxShadow: '0 10px 40px rgba(0,0,0,0.03)' }}
+            className="glass-panel"
             onSubmit={handleSubmit}
           >
             {isSuccess && (

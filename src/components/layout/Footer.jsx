@@ -5,8 +5,8 @@ export default function Footer() {
     <footer className="site-footer luxury-footer">
       <div className="footer-inner">
         <div className="footer-column brand-col">
-          <h3 className="footer-brand">BeautyHub</h3>
-          <p className="footer-desc">The ultimate luxury beauty destination for curated skincare, makeup, haircare, and fragrances.</p>
+          <h3 className="footer-brand" style={{ fontFamily: 'var(--heading)', fontWeight: 800, fontSize: '1.8rem', background: 'linear-gradient(135deg, var(--text), var(--primary))', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', marginBottom: '16px' }}>BeautyHub<span style={{color: 'var(--primary)', WebkitTextFillColor: 'initial'}}>.</span></h3>
+          <p className="footer-desc" style={{ color: 'var(--muted)' }}>The ultimate luxury beauty destination for curated skincare, makeup, haircare, and fragrances from the year 2050.</p>
           <div className="social-links">
             <a href="#" aria-label="Instagram">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
@@ -33,11 +33,13 @@ export default function Footer() {
         </div>
 
         <div className="footer-column">
-          <h3>Company</h3>
-          <p className="footer-link"><Link to="/#about">About Us</Link></p>
-          <p className="footer-link"><Link to="/careers">Careers</Link></p>
-          <p className="footer-link"><Link to="/press">Press</Link></p>
-          <p className="footer-link"><Link to="/affiliates">Affiliates</Link></p>
+          <h3>Contact Us</h3>
+          <p className="footer-link" style={{ color: 'var(--muted)', marginBottom: '8px' }}>+91 9499844194</p>
+          <p className="footer-link" style={{ color: 'var(--muted)', marginBottom: '8px' }}>support@beautyhub.in</p>
+          <p className="footer-link" style={{ color: 'var(--muted)', marginBottom: '8px', lineHeight: 1.5 }}>Godhra, Gujarat - 389001</p>
+          <div style={{ marginTop: '16px' }}>
+            <Link to="/#contact" className="button button-secondary" style={{ padding: '8px 16px', fontSize: '0.9rem' }}>Send Message</Link>
+          </div>
         </div>
 
         <div className="footer-column newsletter-col">

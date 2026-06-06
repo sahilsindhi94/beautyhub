@@ -12,13 +12,15 @@ export default function CartPage() {
 
   if (cartItems.length === 0) {
     return (
-      <section className="page page-cart">
+      <section className="page page-cart premium-cart-bg">
         <div className="page-shell">
-          <div className="cart-empty-state">
-            <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=400&q=80" alt="Empty Cart" className="empty-state-image" />
-            <h2>Your cart is empty</h2>
-            <p>Looks like you haven't added any beauty essentials to your cart yet.</p>
-            <Link to="/products" className="button button-primary">
+          <div className="premium-empty-state glass-panel" style={{ marginTop: '40px' }}>
+            <div className="empty-icon-wrapper">
+              <span className="empty-icon">🛒</span>
+            </div>
+            <h2 style={{ fontFamily: 'var(--heading)', fontSize: '2.5rem', fontWeight: 800, margin: '16px 0 8px' }}>Your bag is empty</h2>
+            <p style={{ color: 'var(--text-soft)', fontSize: '1.1rem', marginBottom: '32px' }}>Looks like you haven't added any beauty essentials yet.</p>
+            <Link to="/products" className="button premium-explore-btn">
               Continue Shopping
             </Link>
           </div>
@@ -28,19 +30,27 @@ export default function CartPage() {
   }
 
   return (
-    <section className="page page-cart">
+    <section className="page page-cart premium-cart-bg">
       <div className="page-shell">
-        <h1 className="cart-title">Your Cart ({itemCount} items)</h1>
+        <motion.div 
+          className="cart-header"
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+        >
+          <h1 className="cart-title" style={{ fontFamily: 'var(--heading)', fontSize: 'clamp(2.5rem, 5vw, 4rem)', fontWeight: 800, margin: 0, letterSpacing: '-0.03em', lineHeight: 1.1 }}>Your Bag</h1>
+          <p style={{ color: 'var(--text-soft)', fontSize: '1.1rem', marginTop: '8px' }}>{itemCount} items</p>
+        </motion.div>
         
-        <div className="cart-layout">
+        <div className="cart-layout premium-layout-split">
           {/* Cart Items List */}
-          <div className="cart-items">
+          <div className="cart-items premium-cart-list">
             {cartItems.map((item, index) => (
               <motion.div 
                 key={item._id} 
-                className="cart-item"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
+                className="cart-item glass-panel premium-cart-item"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.3, delay: index * 0.1 }}
               >
                 <div className="cart-item-image" style={{ backgroundImage: `url(${item.image})` }}></div>
@@ -51,7 +61,7 @@ export default function CartPage() {
                 </div>
                 
                 <div className="cart-item-controls">
-                  <div className="quantity-control">
+                  <div className="premium-quantity-control">
                     <button 
                       onClick={() => updateQuantity(item._id, item.quantity - 1)}
                       aria-label="Decrease quantity"
@@ -67,7 +77,7 @@ export default function CartPage() {
                     ₹{item.price * item.quantity}
                   </div>
                   <button 
-                    className="remove-button" 
+                    className="premium-remove-button" 
                     onClick={() => removeFromCart(item._id)}
                     aria-label="Remove item"
                   >
@@ -77,43 +87,60 @@ export default function CartPage() {
               </motion.div>
             ))}
             
-            <div className="cart-actions">
-              <button className="button button-outline" onClick={clearCart}>
-                Clear Cart
+            <div className="cart-actions" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '24px' }}>
+              <button className="button button-outline" onClick={clearCart} style={{ borderRadius: '100px', padding: '12px 24px' }}>
+                Clear Bag
               </button>
-              <Link to="/products" className="continue-shopping">
-                Continue Shopping
+              <Link to="/products" className="continue-shopping" style={{ color: 'var(--primary)', fontWeight: 600, textDecoration: 'none' }}>
+                ← Continue Shopping
               </Link>
             </div>
           </div>
 
           {/* Order Summary */}
           <div className="order-summary-wrapper">
-            <div className="order-summary">
+            <motion.div 
+              className="order-summary glass-panel premium-summary"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: 0.2 }}
+            >
               <h3>Order Summary</h3>
+              
+              <div className="premium-coupon-section">
+                <input type="text" placeholder="Promo code" className="premium-coupon-input" />
+                <button className="premium-coupon-btn">Apply</button>
+              </div>
+
               <div className="summary-row">
                 <span>Subtotal</span>
-                <span>₹{cartTotal}</span>
+                <span style={{ fontWeight: 600 }}>₹{cartTotal}</span>
               </div>
               <div className="summary-row">
                 <span>Shipping</span>
-                <span>{shippingEstimate === 0 ? 'Free' : `₹${shippingEstimate}`}</span>
+                <span style={{ fontWeight: 600 }}>{shippingEstimate === 0 ? 'Free' : `₹${shippingEstimate}`}</span>
               </div>
               {shippingEstimate > 0 && (
-                <p className="shipping-hint">Free shipping on orders over ₹1500</p>
+                <div className="shipping-notice" style={{ fontSize: '0.85rem', color: 'var(--text-soft)', marginTop: '-8px', marginBottom: '16px' }}>
+                  Free shipping on orders over ₹1500
+                </div>
               )}
-              
-              <div className="summary-row grand-total">
-                <span>Grand Total</span>
-                <span>₹{grandTotal}</span>
+              <div className="summary-row total-row">
+                <span>Total</span>
+                <span style={{ color: 'var(--primary)', fontSize: '1.5rem' }}>₹{grandTotal}</span>
               </div>
-
-              <Link to="/checkout" className="button button-primary button-block">
+              
+              <Link to="/checkout" className="button premium-checkout-btn">
                 Proceed to Checkout
               </Link>
-            </div>
-          </div>
 
+              <div className="trust-badges" style={{ display: 'flex', justifyContent: 'center', gap: '16px', marginTop: '24px', opacity: 0.6 }}>
+                <span style={{ fontSize: '1.5rem' }}>🔒</span>
+                <span style={{ fontSize: '1.5rem' }}>💳</span>
+                <span style={{ fontSize: '1.5rem' }}>🛡️</span>
+              </div>
+            </motion.div>
+          </div>
         </div>
       </div>
     </section>

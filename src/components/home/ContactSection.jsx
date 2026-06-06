@@ -21,7 +21,7 @@ export default function ContactSection() {
       <div className="container" style={{ maxWidth: '1200px', margin: '0 auto' }}>
         <div style={{ textAlign: 'center', marginBottom: '64px' }}>
           <p className="section-eyebrow">Get In Touch</p>
-          <h2 style={{ fontSize: 'clamp(2.5rem, 5vw, 3.5rem)', fontFamily: 'var(--heading)', marginBottom: '16px' }}>We'd Love to Hear From You</h2>
+          <h2 style={{ fontSize: 'clamp(2.5rem, 5vw, 3.5rem)', fontFamily: 'var(--heading)', marginBottom: '16px', lineHeight: 1.1 }}>We'd Love to Hear From You</h2>
           <p style={{ color: 'var(--muted)', maxWidth: '600px', margin: '0 auto', fontSize: '1.1rem', lineHeight: '1.6' }}>Whether you have a question about products, orders, or anything else, our team is ready to answer all your questions.</p>
         </div>
 
@@ -86,26 +86,26 @@ export default function ContactSection() {
 
             <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
               <div style={{ flex: '1 1 140px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                <label htmlFor="firstName" style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--text)' }}>First Name</label>
-                <input id="firstName" type="text" required style={{ padding: '14px 16px', borderRadius: '12px', border: '1px solid var(--border)', background: 'var(--surface)', outlineColor: 'var(--primary)' }} placeholder="Jane" />
+                <label htmlFor="firstName" style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--text)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>First Name</label>
+                <input id="firstName" type="text" required style={{ padding: '16px', borderRadius: '16px', border: '1px solid var(--border)', background: 'rgba(255, 255, 255, 0.5)', outline: 'none', transition: 'all 0.3s ease', fontFamily: 'var(--sans)' }} placeholder="Jane" onFocus={(e) => { e.target.style.borderColor = 'var(--primary)'; e.target.style.background = 'var(--surface)'; e.target.style.boxShadow = '0 0 0 4px rgba(255, 92, 168, 0.1)'; }} onBlur={(e) => { e.target.style.borderColor = 'var(--border)'; e.target.style.background = 'rgba(255, 255, 255, 0.5)'; e.target.style.boxShadow = 'none'; }} />
               </div>
               <div style={{ flex: '1 1 140px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                <label htmlFor="lastName" style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--text)' }}>Last Name</label>
-                <input id="lastName" type="text" required style={{ padding: '14px 16px', borderRadius: '12px', border: '1px solid var(--border)', background: 'var(--surface)', outlineColor: 'var(--primary)' }} placeholder="Doe" />
+                <label htmlFor="lastName" style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--text)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Last Name</label>
+                <input id="lastName" type="text" required style={{ padding: '16px', borderRadius: '16px', border: '1px solid var(--border)', background: 'rgba(255, 255, 255, 0.5)', outline: 'none', transition: 'all 0.3s ease', fontFamily: 'var(--sans)' }} placeholder="Doe" onFocus={(e) => { e.target.style.borderColor = 'var(--primary)'; e.target.style.background = 'var(--surface)'; e.target.style.boxShadow = '0 0 0 4px rgba(255, 92, 168, 0.1)'; }} onBlur={(e) => { e.target.style.borderColor = 'var(--border)'; e.target.style.background = 'rgba(255, 255, 255, 0.5)'; e.target.style.boxShadow = 'none'; }} />
               </div>
             </div>
             
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <label htmlFor="email" style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--text)' }}>Email</label>
-              <input id="email" type="email" required style={{ padding: '14px 16px', borderRadius: '12px', border: '1px solid var(--border)', background: 'var(--surface)', outlineColor: 'var(--primary)' }} placeholder="jane@example.com" />
+              <label htmlFor="email" style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--text)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Email</label>
+              <input id="email" type="email" required style={{ padding: '16px', borderRadius: '16px', border: '1px solid var(--border)', background: 'rgba(255, 255, 255, 0.5)', outline: 'none', transition: 'all 0.3s ease', fontFamily: 'var(--sans)' }} placeholder="jane@example.com" onFocus={(e) => { e.target.style.borderColor = 'var(--primary)'; e.target.style.background = 'var(--surface)'; e.target.style.boxShadow = '0 0 0 4px rgba(255, 92, 168, 0.1)'; }} onBlur={(e) => { e.target.style.borderColor = 'var(--border)'; e.target.style.background = 'rgba(255, 255, 255, 0.5)'; e.target.style.boxShadow = 'none'; }} />
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <label htmlFor="message" style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--text)' }}>Message</label>
-              <textarea id="message" required rows="5" style={{ padding: '14px 16px', borderRadius: '12px', border: '1px solid var(--border)', background: 'var(--surface)', resize: 'vertical', outlineColor: 'var(--primary)' }} placeholder="How can we help you?"></textarea>
+              <label htmlFor="message" style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--text)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Message</label>
+              <textarea id="message" required rows="5" style={{ padding: '16px', borderRadius: '16px', border: '1px solid var(--border)', background: 'rgba(255, 255, 255, 0.5)', outline: 'none', transition: 'all 0.3s ease', resize: 'vertical', fontFamily: 'var(--sans)' }} placeholder="How can we help you?" onFocus={(e) => { e.target.style.borderColor = 'var(--primary)'; e.target.style.background = 'var(--surface)'; e.target.style.boxShadow = '0 0 0 4px rgba(255, 92, 168, 0.1)'; }} onBlur={(e) => { e.target.style.borderColor = 'var(--border)'; e.target.style.background = 'rgba(255, 255, 255, 0.5)'; e.target.style.boxShadow = 'none'; }}></textarea>
             </div>
 
-            <button type="submit" className="button button-primary" disabled={isSubmitting} style={{ marginTop: '8px', padding: '16px', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '8px', opacity: isSubmitting ? 0.7 : 1, cursor: isSubmitting ? 'not-allowed' : 'pointer' }}>
+            <button type="submit" disabled={isSubmitting} style={{ background: 'var(--primary)', color: 'white', padding: '18px 32px', borderRadius: '100px', fontWeight: 800, fontSize: '1.1rem', letterSpacing: '0.05em', textTransform: 'uppercase', marginTop: '16px', boxShadow: '0 4px 15px rgba(255, 92, 168, 0.3)', transition: 'all 0.3s ease', border: 'none', cursor: isSubmitting ? 'not-allowed' : 'pointer', opacity: isSubmitting ? 0.7 : 1, display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '8px' }} onMouseEnter={(e) => { if (!isSubmitting) { e.target.style.transform = 'translateY(-2px)'; e.target.style.boxShadow = '0 8px 25px rgba(255, 92, 168, 0.4)'; } }} onMouseLeave={(e) => { if (!isSubmitting) { e.target.style.transform = 'translateY(0)'; e.target.style.boxShadow = '0 4px 15px rgba(255, 92, 168, 0.3)'; } }}>
               {isSubmitting ? (
                 <>
                   <svg className="animate-spin" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ animation: 'spin 1s linear infinite' }}><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></svg>

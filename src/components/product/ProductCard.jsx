@@ -51,7 +51,7 @@ export default function ProductCard({ product, index }) {
 
   return (
     <motion.article
-      className="product-card modern-card glow-effect"
+      className="product-card glass-panel glow-effect"
       custom={index}
       variants={productVariants}
       initial="hidden"

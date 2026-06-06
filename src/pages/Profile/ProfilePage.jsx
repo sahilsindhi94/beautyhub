@@ -5,12 +5,15 @@ import { api } from '../../../convex/_generated/api'
 import AuthLoadingScreen from '../../components/auth/AuthLoadingScreen'
 import { formatOrderDate } from '../../utils/currency'
 import { useAuthActions } from '@convex-dev/auth/react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import './ProfilePage.css'
 
 export default function ProfilePage() {
   const user = useQuery(api.users.getCurrent)
   const stats = useQuery(api.users.getProfileStats)
+  const recentOrders = useQuery(api.orders.getOrders)
+  const wishlistItems = useQuery(api.wishlist.getWishlist)
+  
   const updateProfile = useMutation(api.users.updateProfile)
   const generateUploadUrl = useMutation(api.users.generateUploadUrl)
   const updateProfileImage = useMutation(api.users.updateProfileImage)
@@ -81,14 +84,18 @@ export default function ProfilePage() {
     }
   }
 
+  // Calculate profile completeness
+  const completeness = user ? [user.name, user.email, user.image, user.phone, user.address].filter(Boolean).length * 20 : 0;
+
   return (
-    <section className="page page-profile" style={{ background: 'var(--bg-soft)', minHeight: '100vh', paddingTop: 0 }}>
+    <section className="page page-profile premium-profile-bg">
       <div className="profile-cover-banner"></div>
-      <div className="page-shell" style={{ marginTop: '-80px', position: 'relative', zIndex: 10 }}>
+      <div className="page-shell premium-dashboard">
         
-        <div className="profile-dashboard">
+        {/* Sidebar / Left Column */}
+        <aside className="dashboard-sidebar">
           <motion.div
-            className="profile-card modern-card"
+            className="glass-panel profile-hero-card"
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.35 }}
@@ -117,66 +124,131 @@ export default function ProfilePage() {
             </div>
             
             <div className="profile-main">
-              <p className="section-eyebrow">My Profile</p>
               {isEditing ? (
-                <div style={{ display: 'flex', gap: '8px', alignItems: 'center', margin: '14px 0 8px', justifyContent: 'center' }}>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', margin: '14px 0 16px', width: '100%' }}>
                   <input 
                     type="text" 
                     value={editName} 
                     onChange={(e) => setEditName(e.target.value)} 
-                    style={{ padding: '10px 16px', borderRadius: '12px', border: '1px solid var(--border)', fontSize: '1rem', outlineColor: 'var(--primary)' }}
+                    style={{ padding: '10px 16px', borderRadius: '12px', border: '1px solid var(--border)', fontSize: '1rem', outlineColor: 'var(--primary)', textAlign: 'center' }}
                     autoFocus
                   />
-                  <button onClick={handleSave} className="button button-primary" style={{ padding: '10px 16px' }}>Save</button>
-                  <button onClick={() => setIsEditing(false)} className="button button-secondary" style={{ padding: '10px 16px' }}>Cancel</button>
+                  <div style={{ display: 'flex', gap: '8px', justifyContent: 'center' }}>
+                    <button onClick={handleSave} className="button button-primary" style={{ padding: '8px 16px', borderRadius: '100px' }}>Save</button>
+                    <button onClick={() => setIsEditing(false)} className="button button-secondary" style={{ padding: '8px 16px', borderRadius: '100px', background: 'transparent' }}>Cancel</button>
+                  </div>
                 </div>
               ) : (
-                <div style={{ display: 'flex', gap: '12px', alignItems: 'center', justifyContent: 'center' }}>
-                  <h1 style={{ margin: '14px 0 8px', fontSize: '2rem' }}>{user.name}</h1>
-                  <button onClick={handleEditClick} style={{ background: 'none', border: 'none', color: 'var(--primary)', cursor: 'pointer', textDecoration: 'none', fontSize: '0.9rem', padding: 0, fontWeight: '600' }}>Edit</button>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                  <h1 className="profile-name">{user.name}</h1>
+                  <button onClick={handleEditClick} className="edit-profile-btn">Edit Profile</button>
                 </div>
               )}
-              <p style={{ color: 'var(--muted)' }}>{user.email}</p>
+              <p className="profile-email">{user.email}</p>
             </div>
-            <button type="button" className="button button-secondary" onClick={handleLogout} style={{ marginTop: '32px', width: '100%', maxWidth: '250px' }}>
-              Logout
+            
+            <div className="completeness-tracker">
+              <div className="completeness-header">
+                <span>Profile Completion</span>
+                <strong>{completeness}%</strong>
+              </div>
+              <div className="completeness-bar-bg">
+                <div className="completeness-bar-fill" style={{ width: `${completeness}%` }}></div>
+              </div>
+              <p style={{ fontSize: '0.8rem', color: 'var(--text-soft)', marginTop: '8px', textAlign: 'center' }}>Add your phone & address to complete your profile.</p>
+            </div>
+
+            <button type="button" className="button premium-logout-btn" onClick={handleLogout}>
+              Sign Out
             </button>
           </motion.div>
+        </aside>
 
-          <div className="profile-stats-grid">
-            <motion.div className="stat-card modern-card glow-effect" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
-              <div className="stat-icon">✨</div>
-              <div className="stat-content">
-                <span>Member Since</span>
-                <strong>{user.createdAt ? formatOrderDate(user.createdAt) : 'Recently'}</strong>
-              </div>
-            </motion.div>
-            
-            <motion.div className="stat-card modern-card glow-effect" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
-              <div className="stat-icon">🛍️</div>
+        {/* Main Dashboard Grid */}
+        <main className="dashboard-main">
+          {/* Stats Row */}
+          <div className="dashboard-stats-grid">
+            <motion.div className="glass-panel stat-card" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}>
+              <div className="stat-icon premium-icon">🛍️</div>
               <div className="stat-content">
                 <span>Total Orders</span>
                 <strong>{stats?.totalOrders || 0}</strong>
               </div>
             </motion.div>
             
-            <motion.div className="stat-card modern-card glow-effect" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
-              <div className="stat-icon">💖</div>
+            <motion.div className="glass-panel stat-card" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
+              <div className="stat-icon premium-icon">💖</div>
               <div className="stat-content">
-                <span>Wishlist Count</span>
+                <span>Wishlist</span>
                 <strong>{stats?.wishlistCount || 0}</strong>
               </div>
             </motion.div>
             
-            <motion.div className="stat-card modern-card glow-effect" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}>
-              <div className="stat-icon">🛒</div>
+            <motion.div className="glass-panel stat-card" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
+              <div className="stat-icon premium-icon">🛒</div>
               <div className="stat-content">
-                <span>Cart Count</span>
+                <span>In Cart</span>
                 <strong>{stats?.cartCount || 0}</strong>
               </div>
             </motion.div>
           </div>
-        </div>
+
+          <div className="dashboard-split-panels">
+            {/* Recent Orders */}
+            <motion.div className="glass-panel dashboard-panel" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.4 }}>
+              <div className="panel-header">
+                <h3>Recent Orders</h3>
+                <Link to="/orders" className="panel-link">View All →</Link>
+              </div>
+              <div className="panel-body">
+                {recentOrders && recentOrders.length > 0 ? (
+                  <ul className="recent-order-list">
+                    {recentOrders.slice(0, 3).map(order => (
+                      <li key={order._id} className="recent-order-item">
+                        <div className="order-item-left">
+                          <span className="order-number">{order.orderNumber}</span>
+                          <span className="order-date">{formatOrderDate(order.createdAt)}</span>
+                        </div>
+                        <div className="order-item-right">
+                          <span className={`order-status-badge ${order.status.toLowerCase()}`}>{order.status}</span>
+                          <span className="order-total">₹{order.total.toFixed(2)}</span>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <div className="empty-panel-state">
+                    <p>No orders yet.</p>
+                    <Link to="/products" className="button button-primary" style={{ padding: '8px 16px', borderRadius: '100px', fontSize: '0.9rem' }}>Shop Now</Link>
+                  </div>
+                )}
+              </div>
+            </motion.div>
+
+            {/* Wishlist Summary */}
+            <motion.div className="glass-panel dashboard-panel" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.5 }}>
+              <div className="panel-header">
+                <h3>My Wishlist</h3>
+                <Link to="/wishlist" className="panel-link">View All →</Link>
+              </div>
+              <div className="panel-body">
+                {wishlistItems && wishlistItems.length > 0 ? (
+                  <div className="mini-wishlist-grid">
+                    {wishlistItems.slice(0, 4).map(item => (
+                      <div key={item._id} className="mini-wishlist-item" style={{ backgroundImage: `url(${item.product?.image})` }}></div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="empty-panel-state">
+                    <p>Your wishlist is empty.</p>
+                    <Link to="/products" className="button button-primary" style={{ padding: '8px 16px', borderRadius: '100px', fontSize: '0.9rem' }}>Discover Products</Link>
+                  </div>
+                )}
+              </div>
+            </motion.div>
+          </div>
+        </main>
+
       </div>
     </section>
   )

@@ -9,21 +9,29 @@ export default function WishlistPage() {
   const { wishlistItems, removeFromWishlist } = useWishlist()
   const { addToCart } = useCart()
 
-  const handleMoveToCart = (item) => {
+  const handleMoveToCart = (item, e) => {
+    e.preventDefault()
     addToCart(item)
     removeFromWishlist(item._id)
   }
 
+  const handleRemove = (id, e) => {
+    e.preventDefault()
+    removeFromWishlist(id)
+  }
+
   if (wishlistItems.length === 0) {
     return (
-      <section className="page page-wishlist">
+      <section className="page page-wishlist premium-wishlist-bg">
         <div className="page-shell">
-          <div className="wishlist-empty-state">
-            <img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=400&q=80" alt="Empty Wishlist" className="empty-state-image" />
-            <h2>Your wishlist is empty</h2>
-            <p>Save items you love here and review them later.</p>
-            <Link to="/products" className="button button-primary">
-              Discover Products
+          <div className="premium-empty-state glass-panel">
+            <div className="empty-icon-wrapper">
+              <span className="empty-icon">💖</span>
+            </div>
+            <h2 style={{ fontFamily: 'var(--heading)', fontSize: '2.5rem', fontWeight: 800, margin: '16px 0 8px' }}>Nothing to love yet</h2>
+            <p style={{ color: 'var(--text-soft)', fontSize: '1.1rem', marginBottom: '32px' }}>Your curated collection of premium beauty awaits.</p>
+            <Link to="/products" className="button premium-explore-btn">
+              Explore Collection
             </Link>
           </div>
         </div>
@@ -32,44 +40,59 @@ export default function WishlistPage() {
   }
 
   return (
-    <section className="page page-wishlist">
+    <section className="page page-wishlist premium-wishlist-bg">
       <div className="page-shell">
-        <h1 className="wishlist-title">My Wishlist ({wishlistItems.length} items)</h1>
+        <motion.div 
+          className="wishlist-header"
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+        >
+          <h1 className="wishlist-title" style={{ fontFamily: 'var(--heading)', fontSize: 'clamp(2.5rem, 5vw, 4rem)', fontWeight: 800, margin: 0, letterSpacing: '-0.03em', lineHeight: 1.1 }}>Curated Collection</h1>
+          <p style={{ color: 'var(--text-soft)', fontSize: '1.1rem', marginTop: '8px' }}>{wishlistItems.length} items saved</p>
+        </motion.div>
         
-        <div className="wishlist-grid">
+        <div className="wishlist-masonry">
           {wishlistItems.map((item, index) => (
             <motion.div 
               key={item._id} 
-              className="wishlist-item-card"
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.3, delay: index * 0.1 }}
+              className="wishlist-masonry-item"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.35, delay: index * 0.05 }}
             >
-              <Link to={`/products/${item._id}`} className="wishlist-item-image-link">
-                <div className="wishlist-item-image" style={{ backgroundImage: `url(${item.image})` }}></div>
+              <Link to={`/products/${item._id}`} className="wishlist-masonry-link">
+                <div className="wishlist-image-wrapper">
+                  <img src={item.image} alt={item.name} className="wishlist-image" />
+                  
+                  {/* Overlay Actions */}
+                  <div className="wishlist-item-overlay">
+                    <button 
+                      className="wishlist-action-btn remove-btn"
+                      onClick={(e) => handleRemove(item._id, e)}
+                      title="Remove from wishlist"
+                    >
+                      ✕
+                    </button>
+                    
+                    <button 
+                      className={`wishlist-quick-add ${item.stock === 0 ? 'disabled' : ''}`}
+                      onClick={(e) => handleMoveToCart(item, e)}
+                      disabled={item.stock === 0}
+                    >
+                      {item.stock === 0 ? 'Out of Stock' : 'Quick Add to Bag'}
+                    </button>
+                  </div>
+                </div>
+                
+                <div className="wishlist-item-info">
+                  <span className="item-brand">{item.brand}</span>
+                  <h3 className="item-name">{item.name}</h3>
+                  <div className="item-price-wrapper">
+                    <PriceDisplay price={item.price} oldPrice={item.oldPrice} />
+                  </div>
+                </div>
               </Link>
-              
-              <div className="wishlist-item-info">
-                <span className="item-brand">{item.brand}</span>
-                <Link to={`/products/${item._id}`} className="item-name">{item.name}</Link>
-                <PriceDisplay price={item.price} oldPrice={item.oldPrice} />
-              </div>
-
-              <div className="wishlist-item-actions">
-                <button 
-                  className="button button-primary button-block"
-                  onClick={() => handleMoveToCart(item)}
-                  disabled={item.stock === 0}
-                >
-                  {item.stock === 0 ? 'Out of Stock' : 'Move to Cart'}
-                </button>
-                <button 
-                  className="button button-outline button-block remove-btn"
-                  onClick={() => removeFromWishlist(item._id)}
-                >
-                  Remove
-                </button>
-              </div>
             </motion.div>
           ))}
         </div>

@@ -161,15 +161,15 @@ export default function CheckoutPage() {
 
   if (cartItems.length === 0) {
     return (
-      <section className="page page-checkout">
+      <section className="page page-checkout premium-checkout-bg">
         <div className="page-shell">
-          <div className="checkout-empty">
-            <div>
+          <div className="premium-empty-state glass-panel" style={{ marginTop: '40px' }}>
+            <div className="empty-icon-wrapper">
               <span className="empty-icon">🛍️</span>
-              <h2>Your cart is empty</h2>
-              <p>Add beauty essentials to your cart before checking out.</p>
             </div>
-            <Link to="/products" className="button button-primary button-block">
+            <h2 style={{ fontFamily: 'var(--heading)', fontSize: '2.5rem', fontWeight: 800, margin: '16px 0 8px' }}>Your cart is empty</h2>
+            <p style={{ color: 'var(--text-soft)', fontSize: '1.1rem', marginBottom: '32px' }}>Add beauty essentials to your cart before checking out.</p>
+            <Link to="/products" className="button premium-explore-btn">
               Continue Shopping
             </Link>
           </div>
@@ -179,7 +179,7 @@ export default function CheckoutPage() {
   }
 
   return (
-    <section className="page page-checkout">
+    <section className="page page-checkout premium-checkout-bg">
       <div className="page-shell">
         <motion.div
           className="checkout-intro"
@@ -187,8 +187,8 @@ export default function CheckoutPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
         >
-          <h1>Secure Checkout</h1>
-          <div className="checkout-progress">
+          <h1 style={{ fontFamily: 'var(--heading)', fontSize: 'clamp(2.5rem, 5vw, 4rem)', fontWeight: 800, margin: '0 0 32px', textAlign: 'center', letterSpacing: '-0.03em', lineHeight: 1.1 }}>Secure Checkout</h1>
+          <div className="checkout-progress premium-progress">
             <div className={`progress-step ${checkoutStep >= 1 ? 'active' : ''}`} onClick={() => checkoutStep > 1 && setCheckoutStep(1)}>
               <span className="step-num">1</span> Shipping
             </div>
@@ -203,9 +203,9 @@ export default function CheckoutPage() {
           </div>
         </motion.div>
 
-        <div className="checkout-grid">
+        <div className="checkout-grid premium-checkout-grid">
           <motion.form
-            className="checkout-form"
+            className="checkout-form glass-panel premium-checkout-panel"
             onSubmit={handleSubmit}
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -213,12 +213,12 @@ export default function CheckoutPage() {
           >
             {checkoutStep === 1 && (
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-                <div className="section-header">
+                <div className="section-header premium-section-header">
                   <h2>1. Shipping information</h2>
                   <p>Tell us where to deliver your beauty essentials.</p>
                 </div>
 
-                <div className="field-grid">
+                <div className="field-grid premium-field-grid">
                   <div className="field-group full-width">
                     <label htmlFor="fullName">Full Name</label>
                     <input
@@ -313,37 +313,39 @@ export default function CheckoutPage() {
                     {errors.pincode && <div className="field-error">{errors.pincode}</div>}
                   </div>
                 </div>
-                <button type="button" className="button button-primary button-block luxury-btn-full" onClick={nextStep} style={{marginTop: '2rem'}}>
-                  Continue to Payment
-                </button>
+                <div className="form-actions">
+                  <button type="button" className="button premium-continue-btn" onClick={nextStep}>
+                    Continue to Payment
+                  </button>
+                </div>
               </motion.div>
             )}
 
             {checkoutStep === 2 && (
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-                <div className="section-header">
-                  <h2>2. Payment method</h2>
-                  <p>Select the best option for your order today.</p>
+                <div className="section-header premium-section-header">
+                  <h2>2. Payment Method</h2>
+                  <p>Choose how you want to pay for your order.</p>
                 </div>
 
-                <div className="payment-row">
+                <div className="payment-options">
                   {paymentOptions.map((option) => (
                     <label
                       key={option.value}
-                      className={`payment-label luxury-payment ${paymentMethod === option.value ? 'active' : ''}`}
+                      className={`payment-option ${option.disabled ? 'disabled' : ''} ${paymentMethod === option.value ? 'selected' : ''}`}
                     >
                       <input
                         type="radio"
-                        name="payment"
+                        name="paymentMethod"
                         value={option.value}
                         checked={paymentMethod === option.value}
+                        onChange={(e) => setPaymentMethod(e.target.value)}
                         disabled={option.disabled}
-                        onChange={() => setPaymentMethod(option.value)}
                       />
-                      <span>
-                        <div className="payment-name">{option.label}</div>
-                        <div className="payment-description">{option.description}</div>
-                      </span>
+                      <div className="payment-option-details">
+                        <span className="payment-option-label">{option.label}</span>
+                        <span className="payment-option-desc">{option.description}</span>
+                      </div>
                     </label>
                   ))}
                 </div>
@@ -361,28 +363,28 @@ export default function CheckoutPage() {
 
             {checkoutStep === 3 && (
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-                <div className="section-header">
+                <div className="section-header premium-section-header">
                   <h2>3. Review & Submit</h2>
                   <p>Confirm your details and place your order.</p>
                 </div>
                 
-                <div className="review-block">
-                  <h4>Shipping To:</h4>
-                  <p>{formValues.fullName}<br/>{formValues.addressLine1}, {formValues.city}, {formValues.state} - {formValues.pincode}</p>
+                <div className="review-block glass-panel" style={{ padding: '24px', borderRadius: '16px', marginBottom: '16px' }}>
+                  <h4 style={{ margin: '0 0 12px', fontFamily: 'var(--heading)', fontSize: '1.2rem', color: 'var(--text)' }}>Shipping To:</h4>
+                  <p style={{ margin: 0, color: 'var(--text-soft)', lineHeight: 1.6 }}>{formValues.fullName}<br/>{formValues.addressLine1}, {formValues.city}, {formValues.state} - {formValues.pincode}</p>
                 </div>
                 
-                <div className="review-block">
-                  <h4>Payment Method:</h4>
-                  <p>{paymentOptions.find(o => o.value === paymentMethod)?.label}</p>
+                <div className="review-block glass-panel" style={{ padding: '24px', borderRadius: '16px', marginBottom: '24px' }}>
+                  <h4 style={{ margin: '0 0 12px', fontFamily: 'var(--heading)', fontSize: '1.2rem', color: 'var(--text)' }}>Payment Method:</h4>
+                  <p style={{ margin: 0, color: 'var(--text-soft)', fontWeight: 600 }}>{paymentOptions.find(o => o.value === paymentMethod)?.label}</p>
                 </div>
 
-                {apiError && <div className="form-error">{apiError}</div>}
+                {apiError && <div className="field-error" style={{ textAlign: 'center', marginBottom: '16px', fontSize: '1rem' }}>{apiError}</div>}
                 
-                <div style={{ display: 'flex', gap: '1rem', marginTop: '2rem' }}>
-                  <button type="button" className="button button-secondary luxury-btn-outline" onClick={prevStep} style={{flex: 1, color: 'var(--text)', borderColor: 'var(--border)'}} disabled={isSubmitting}>
-                    Back
+                <div className="form-actions space-between">
+                  <button type="button" className="button premium-back-btn" onClick={prevStep} disabled={isSubmitting}>
+                    ← Back
                   </button>
-                  <button type="submit" className="button button-primary luxury-btn-full" style={{flex: 2}} disabled={isSubmitting}>
+                  <button type="submit" className="button premium-continue-btn" disabled={isSubmitting}>
                     {isSubmitting ? 'Placing Order...' : 'Place Order Now'}
                   </button>
                 </div>
@@ -391,37 +393,45 @@ export default function CheckoutPage() {
           </motion.form>
 
           <motion.aside
-            className="summary-panel"
+            className="checkout-summary-wrapper"
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.35 }}
           >
-            <div className="section-header">
-              <h2>Order summary</h2>
-              <p>Verify every item, quantity, and final price before completing checkout.</p>
-            </div>
+            <div className="premium-summary glass-panel">
+              <div className="section-header premium-section-header">
+                <h2>Order summary</h2>
+              </div>
 
-            <div className="order-summary-list">
-              {cartItems.map((item) => (
-                <OrderSummaryItem key={item._id} item={item} />
-              ))}
-            </div>
+              <div className="summary-items">
+                {cartItems.map((item) => (
+                  <OrderSummaryItem key={item._id} item={item} />
+                ))}
+              </div>
 
-            <div className="summary-row">
-              <span>Subtotal</span>
-              <span>{formatCurrency(cartTotal)}</span>
-            </div>
-            <div className="summary-row">
-              <span>Shipping charge</span>
-              <span>{shipping === 0 ? 'Free' : formatCurrency(shipping)}</span>
-            </div>
-            <div className="summary-row">
-              <span>Discount</span>
-              <span>{discount === 0 ? '₹0' : `-${formatCurrency(discount)}`}</span>
-            </div>
-            <div className="summary-row grand-total">
-              <span>Grand Total</span>
-              <span>{formatCurrency(total)}</span>
+              <div className="summary-row" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
+                <span style={{ color: 'var(--text-soft)' }}>Subtotal</span>
+                <span style={{ fontWeight: 600 }}>{formatCurrency(cartTotal)}</span>
+              </div>
+              <div className="summary-row" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '12px' }}>
+                <span style={{ color: 'var(--text-soft)' }}>Shipping charge</span>
+                <span style={{ fontWeight: 600 }}>{shipping === 0 ? 'Free' : formatCurrency(shipping)}</span>
+              </div>
+              <div className="summary-row" style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '24px' }}>
+                <span style={{ color: 'var(--text-soft)' }}>Discount</span>
+                <span style={{ fontWeight: 600, color: '#10B981' }}>{discount === 0 ? '₹0' : `-${formatCurrency(discount)}`}</span>
+              </div>
+              
+              <div className="summary-row total-row" style={{ display: 'flex', justifyContent: 'space-between', paddingTop: '24px', borderTop: '1px dashed var(--border)', alignItems: 'center' }}>
+                <span style={{ fontFamily: 'var(--heading)', fontWeight: 800, fontSize: '1.2rem' }}>Grand Total</span>
+                <span style={{ fontFamily: 'var(--heading)', fontWeight: 800, fontSize: '1.5rem', color: 'var(--primary)' }}>{formatCurrency(total)}</span>
+              </div>
+
+              <div className="trust-badges" style={{ display: 'flex', justifyContent: 'center', gap: '16px', marginTop: '32px', opacity: 0.6 }}>
+                <span style={{ fontSize: '1.5rem' }}>🔒</span>
+                <span style={{ fontSize: '1.5rem' }}>💳</span>
+                <span style={{ fontSize: '1.5rem' }}>🛡️</span>
+              </div>
             </div>
           </motion.aside>
         </div>

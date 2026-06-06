@@ -8,11 +8,13 @@
 .products-sidebar {
   position: sticky;
   top: 100px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 24px;
   padding: 2rem;
-  box-shadow: 0 10px 40px rgba(31, 31, 31, 0.03);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.03);
 }
 
 .filter-group {
@@ -24,30 +26,32 @@
 }
 
 .filter-group h3 {
-  font-family: var(--serif);
+  font-family: var(--heading);
   font-size: 1.2rem;
   margin-bottom: 1.25rem;
-  font-weight: 600;
-  color: var(--highlight);
-  letter-spacing: 0.05em;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: -0.02em;
 }
 
 .search-input {
   width: 100%;
-  padding: 0.85rem 1.25rem;
-  border: 1px solid var(--border);
-  border-radius: 4px;
-  background: var(--surface);
+  padding: 14px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 100px;
+  background: rgba(255, 255, 255, 0.8);
   color: var(--text);
-  font-family: inherit;
+  font-family: var(--sans);
   font-size: 0.95rem;
   transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.02);
 }
 
 .search-input:focus {
   outline: none;
-  border-color: var(--highlight);
-  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.12);
+  border-color: var(--primary);
+  background: var(--surface);
+  box-shadow: 0 4px 20px rgba(255, 92, 168, 0.1);
 }
 
 .filter-list {
@@ -83,11 +87,12 @@
 }
 
 .products-header h2 {
-  font-family: var(--serif);
+  font-family: var(--heading);
   font-size: 2rem;
-  font-weight: 600;
+  font-weight: 800;
   color: var(--text);
   margin: 0;
+  letter-spacing: -0.03em;
 }
 
 .sort-control {
@@ -97,22 +102,22 @@
 }
 
 .sort-select {
-  padding: 0.6rem 1.2rem;
+  padding: 10px 16px;
   border: 1px solid var(--border);
-  border-radius: 4px;
+  border-radius: 100px;
   background: var(--surface);
   color: var(--text);
-  font-family: inherit;
-  font-size: 0.95rem;
+  font-family: var(--sans);
+  font-weight: 500;
   cursor: pointer;
-  transition: all 0.3s ease;
+  outline: none;
+  transition: border-color 0.2s ease;
 }
 
 .sort-select:focus {
-  outline: none;
-  border-color: var(--highlight);
-  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.12);
+  border-color: var(--primary);
 }
+
 
 .mobile-filter-btn {
   display: none;

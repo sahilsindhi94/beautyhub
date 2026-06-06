@@ -40,46 +40,39 @@ export default function OrdersPage() {
     <section className="page page-orders">
       <div className="page-shell">
         <motion.div
-          className="orders-hero luxury-hero"
+          className="orders-hero premium-hero"
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
         >
-          <span className="section-eyebrow">Your History</span>
-          <h1>Purchase Archive</h1>
+          <h1 style={{ fontFamily: 'var(--heading)', fontSize: 'clamp(2.5rem, 5vw, 4rem)', fontWeight: 800, marginBottom: '16px', letterSpacing: '-0.03em', lineHeight: 1.1 }}>Purchase Archive</h1>
+          <p style={{ color: 'var(--text-soft)', fontSize: '1.1rem' }}>Track your premium beauty acquisitions.</p>
         </motion.div>
 
-        <div className="orders-grid editorial-grid">
-          {orders.map((order) => (
+        <div className="orders-timeline premium-timeline">
+          {orders.map((order, index) => (
             <motion.article
               key={order._id}
-              className="order-ticket luxury-ticket"
+              className="order-ticket glass-panel premium-ticket"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.35, delay: 0.05 }}
+              transition={{ duration: 0.35, delay: index * 0.1 }}
             >
-              <div className="ticket-header">
-                <div>
-                  <span className="ticket-label">Order No.</span>
-                  <p className="order-number">{order.orderNumber}</p>
+              <div className="timeline-dot"></div>
+              <div className="ticket-header" style={{ borderBottom: '1px solid var(--border)', paddingBottom: '16px', marginBottom: '16px' }}>
+                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                  <span className="ticket-label" style={{ fontSize: '0.85rem', color: 'var(--text-soft)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Order No.</span>
+                  <p className="order-number" style={{ fontFamily: 'var(--heading)', fontWeight: 800, fontSize: '1.2rem', margin: 0 }}>{order.orderNumber}</p>
                 </div>
-                <StatusBadge status={order.status} />
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
+                  <span className="ticket-label" style={{ fontSize: '0.85rem', color: 'var(--text-soft)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Date</span>
+                  <p className="order-date" style={{ fontWeight: 600, margin: 0 }}>{formatOrderDate(order.createdAt)}</p>
+                </div>
               </div>
 
               <div className="ticket-body">
-                <div className="ticket-date-price">
-                  <div>
-                    <span className="ticket-label">Date</span>
-                    <p className="order-date">{formatOrderDate(order.createdAt)}</p>
-                  </div>
-                  <div>
-                    <span className="ticket-label">Total</span>
-                    <p className="order-total">{formatCurrency(order.total)}</p>
-                  </div>
-                </div>
-
-                <div className="order-products-preview luxury-preview">
-                  {order.orderItems.slice(0, 3).map((item) => (
+                <div className="order-products-preview premium-preview">
+                  {order.orderItems.map((item) => (
                     <div key={item.name} className="order-product-pill">
                       <img src={item.image} alt={item.name} />
                       <div className="pill-info">
@@ -88,17 +81,19 @@ export default function OrdersPage() {
                       </div>
                     </div>
                   ))}
-                  {order.orderItems.length > 3 && (
-                    <div className="order-more">
-                      <span>+{order.orderItems.length - 3}</span>
-                    </div>
-                  )}
                 </div>
               </div>
 
-              <div className="ticket-footer">
-                <Link to={`/orders/${order._id}`} className="button luxury-btn-outline ticket-btn">
-                  View Receipt
+              <div className="ticket-footer" style={{ borderTop: '1px solid var(--border)', paddingTop: '16px', marginTop: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column' }}>
+                    <span className="ticket-label" style={{ fontSize: '0.85rem', color: 'var(--text-soft)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Total</span>
+                    <p className="order-total" style={{ fontFamily: 'var(--heading)', fontWeight: 800, fontSize: '1.2rem', margin: 0, color: 'var(--primary)' }}>{formatCurrency(order.total)}</p>
+                  </div>
+                  <span className={`order-status-badge premium-badge ${order.status.toLowerCase()}`}>{order.status}</span>
+                </div>
+                <Link to={`/orders/${order._id}`} className="button button-primary ticket-btn" style={{ borderRadius: '100px', padding: '10px 24px', fontWeight: 600 }}>
+                  View Details
                 </Link>
               </div>
             </motion.article>

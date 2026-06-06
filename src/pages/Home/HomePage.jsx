@@ -6,7 +6,7 @@ import WhyChooseUs from '../../components/home/WhyChooseUs'
 import BrandShowcase from '../../components/home/BrandShowcase'
 import BeautyBlog from '../../components/home/BeautyBlog'
 import Testimonials from '../../components/home/Testimonials'
-import NewsletterSection from '../../components/home/NewsletterSection'
+import ContactSection from '../../components/home/ContactSection'
 import InstagramGallery from '../../components/home/InstagramGallery'
 import './HomePage.css'
 
@@ -22,7 +22,7 @@ export default function HomePage() {
         <BrandShowcase />
         <BeautyBlog />
         <Testimonials />
-        <NewsletterSection />
+        <ContactSection />
         <InstagramGallery />
       </main>
     </div>

@@ -52,3 +52,21 @@ export const updateProfile = mutation({
     await ctx.db.patch(user._id, { name: args.name });
   },
 });
+
+export const generateUploadUrl = mutation(async (ctx) => {
+  const user = await getCurrentUser(ctx);
+  if (!user) throw new Error("Unauthorized");
+  return await ctx.storage.generateUploadUrl();
+});
+
+export const updateProfileImage = mutation({
+  args: { storageId: v.id("_storage") },
+  handler: async (ctx, args) => {
+    const user = await getCurrentUser(ctx);
+    if (!user) throw new Error("Unauthorized");
+    
+    const imageUrl = await ctx.storage.getUrl(args.storageId);
+    await ctx.db.patch(user._id, { image: imageUrl });
+    return imageUrl;
+  },
+});

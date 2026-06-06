@@ -6,6 +6,7 @@ import { motion } from 'framer-motion'
 import RelatedProducts from './RelatedProducts'
 import { useCart } from '../../context/CartContext'
 import { useWishlist } from '../../context/WishlistContext'
+import PriceDisplay from '../../components/common/PriceDisplay'
 import './ProductDetailsPage.css'
 
 function RatingStars({ rating }) {
@@ -76,56 +77,61 @@ export default function ProductDetailsPage() {
           <Link to="/">Home</Link> / <Link to="/products">Products</Link> / <span>{product.category}</span> / <span>{product.name}</span>
         </div>
 
-        <div className="product-details-layout">
+        <div className="product-details-layout split-screen">
           {/* Image Gallery */}
-          <motion.div 
-            className="product-image-container"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            <div className="main-image" style={{ backgroundImage: `url(${product.image})` }}>
-              {discountAmount > 0 && <span className="discount-badge badge-large">{discountAmount}% OFF</span>}
-            </div>
-          </motion.div>
+          <div className="product-gallery-sticky">
+            <motion.div 
+              className="product-image-container luxury"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+            >
+              <div className="main-image" style={{ backgroundImage: `url(${product.image})` }}>
+                {discountAmount > 0 && <span className="discount-badge luxury-badge">-{discountAmount}%</span>}
+              </div>
+            </motion.div>
+          </div>
 
           {/* Product Info */}
           <motion.div 
-            className="product-info-container"
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
+            className="product-info-container luxury-info"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
           >
             <span className="details-brand">{product.brand}</span>
             <h1 className="details-name">{product.name}</h1>
             
-            <RatingStars rating={product.rating} />
-            
-            <div className="details-pricing">
-              <span className="details-current-price">₹{product.price}</span>
-              {product.oldPrice && <span className="details-old-price">₹{product.oldPrice}</span>}
+            <div className="details-meta-row">
+              <RatingStars rating={product.rating} />
+              <span className="details-category">· {product.category}</span>
             </div>
-
-            <div className="details-stock-status">
-              {product.stock > 0 ? (
-                <span className="in-stock">✓ In Stock ({product.stock} available)</span>
-              ) : (
-                <span className="out-of-stock">✗ Out of Stock</span>
-              )}
+            
+            <div className="details-pricing luxury-pricing">
+              <PriceDisplay price={product.price} oldPrice={product.oldPrice} className="details-price-display" />
             </div>
 
             <p className="details-description">{product.description}</p>
+            
+            <div className="why-love-it-section">
+              <h3>Why You'll Love It</h3>
+              <ul className="benefits-list">
+                <li><span className="check">✓</span> Premium quality formulation</li>
+                <li><span className="check">✓</span> Cruelty-free and ethically sourced</li>
+                <li><span className="check">✓</span> Long-lasting radiant finish</li>
+              </ul>
+            </div>
 
-            <div className="details-actions">
+            <div className="details-actions luxury-actions">
               <button
-                className="button button-primary button-large"
+                className="button luxury-btn-full"
                 disabled={product.stock === 0}
                 onClick={() => addToCart(product)}
               >
-                Add to Cart
+                {product.stock === 0 ? 'Out of Stock' : 'Add to Bag'}
               </button>
               <button
-                className="button button-outline button-icon"
+                className={`button luxury-wishlist-btn ${inWishlist ? 'active' : ''}`}
                 aria-label={inWishlist ? 'Remove from Wishlist' : 'Add to Wishlist'}
                 onClick={() =>
                   inWishlist ? removeFromWishlist(product._id) : addToWishlist(product)
@@ -135,8 +141,12 @@ export default function ProductDetailsPage() {
               </button>
             </div>
             
-            <div className="details-meta">
-              <p><strong>Category:</strong> {product.category}</p>
+            <div className="details-stock-status">
+              {product.stock > 0 ? (
+                <span className="in-stock">Ships within 24 hours ({product.stock} left)</span>
+              ) : (
+                <span className="out-of-stock">Currently unavailable</span>
+              )}
             </div>
           </motion.div>
         </div>

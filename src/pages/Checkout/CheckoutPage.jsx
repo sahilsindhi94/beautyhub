@@ -54,6 +54,7 @@ export default function CheckoutPage() {
   const [errors, setErrors] = useState({})
   const [apiError, setApiError] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [checkoutStep, setCheckoutStep] = useState(1)
 
   const shipping = cartTotal > 1500 ? 0 : cartTotal > 0 ? 100 : 0
   const discount = 0
@@ -82,33 +83,30 @@ export default function CheckoutPage() {
     }))
   }
 
-  const validate = () => {
+  const validateStep1 = () => {
     const nextErrors = {}
-
-    if (!isValidName(formValues.fullName)) {
-      nextErrors.fullName = 'Enter a valid full name.'
-    }
-    if (!isValidPhone(formValues.mobile)) {
-      nextErrors.mobile = 'Enter a valid 10-digit mobile number.'
-    }
-    if (!isValidEmail(formValues.email)) {
-      nextErrors.email = 'Enter a valid email address.'
-    }
-    if (!isRequired(formValues.addressLine1)) {
-      nextErrors.addressLine1 = 'Address line 1 is required.'
-    }
-    if (!isRequired(formValues.city)) {
-      nextErrors.city = 'City is required.'
-    }
-    if (!isRequired(formValues.state)) {
-      nextErrors.state = 'State is required.'
-    }
-    if (!isValidPincode(formValues.pincode)) {
-      nextErrors.pincode = 'Enter a valid 6-digit pincode.'
-    }
-
+    if (!isValidName(formValues.fullName)) nextErrors.fullName = 'Enter a valid full name.'
+    if (!isValidPhone(formValues.mobile)) nextErrors.mobile = 'Enter a valid 10-digit mobile number.'
+    if (!isValidEmail(formValues.email)) nextErrors.email = 'Enter a valid email address.'
+    if (!isRequired(formValues.addressLine1)) nextErrors.addressLine1 = 'Address line 1 is required.'
+    if (!isRequired(formValues.city)) nextErrors.city = 'City is required.'
+    if (!isRequired(formValues.state)) nextErrors.state = 'State is required.'
+    if (!isValidPincode(formValues.pincode)) nextErrors.pincode = 'Enter a valid 6-digit pincode.'
+    
     setErrors(nextErrors)
     return Object.keys(nextErrors).length === 0
+  }
+
+  const nextStep = () => {
+    if (checkoutStep === 1) {
+      if (validateStep1()) setCheckoutStep(2)
+    } else if (checkoutStep === 2) {
+      setCheckoutStep(3)
+    }
+  }
+
+  const prevStep = () => {
+    setCheckoutStep((prev) => Math.max(1, prev - 1))
   }
 
   const handleSubmit = async (event) => {
@@ -116,10 +114,6 @@ export default function CheckoutPage() {
 
     if (!cartItems.length) {
       setApiError('Add at least one item to your cart before placing an order.')
-      return
-    }
-
-    if (!validate()) {
       return
     }
 
@@ -193,8 +187,20 @@ export default function CheckoutPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
         >
-          <h1>Checkout</h1>
-          <p>Review your shipping address, payment method, and order before completing the purchase.</p>
+          <h1>Secure Checkout</h1>
+          <div className="checkout-progress">
+            <div className={`progress-step ${checkoutStep >= 1 ? 'active' : ''}`} onClick={() => checkoutStep > 1 && setCheckoutStep(1)}>
+              <span className="step-num">1</span> Shipping
+            </div>
+            <div className={`progress-line ${checkoutStep >= 2 ? 'active' : ''}`} />
+            <div className={`progress-step ${checkoutStep >= 2 ? 'active' : ''}`} onClick={() => checkoutStep > 2 && setCheckoutStep(2)}>
+              <span className="step-num">2</span> Payment
+            </div>
+            <div className={`progress-line ${checkoutStep >= 3 ? 'active' : ''}`} />
+            <div className={`progress-step ${checkoutStep >= 3 ? 'active' : ''}`}>
+              <span className="step-num">3</span> Review
+            </div>
+          </div>
         </motion.div>
 
         <div className="checkout-grid">
@@ -205,139 +211,183 @@ export default function CheckoutPage() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.35 }}
           >
-            <div className="section-header">
-              <h2>Shipping information</h2>
-              <p>Tell us where to deliver your beauty essentials.</p>
-            </div>
+            {checkoutStep === 1 && (
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                <div className="section-header">
+                  <h2>1. Shipping information</h2>
+                  <p>Tell us where to deliver your beauty essentials.</p>
+                </div>
 
-            <div className="field-grid">
-              <div className="field-group full-width">
-                <label htmlFor="fullName">Full Name</label>
-                <input
-                  id="fullName"
-                  value={formValues.fullName}
-                  onChange={handleChange('fullName')}
-                  placeholder="Priya Sharma"
-                  type="text"
-                />
-                {errors.fullName && <div className="field-error">{errors.fullName}</div>}
-              </div>
+                <div className="field-grid">
+                  <div className="field-group full-width">
+                    <label htmlFor="fullName">Full Name</label>
+                    <input
+                      id="fullName"
+                      value={formValues.fullName}
+                      onChange={handleChange('fullName')}
+                      placeholder="Priya Sharma"
+                      type="text"
+                    />
+                    {errors.fullName && <div className="field-error">{errors.fullName}</div>}
+                  </div>
 
-              <div className="field-group">
-                <label htmlFor="mobile">Mobile Number</label>
-                <input
-                  id="mobile"
-                  value={formValues.mobile}
-                  onChange={handleChange('mobile')}
-                  placeholder="9876543210"
-                  type="tel"
-                />
-                {errors.mobile && <div className="field-error">{errors.mobile}</div>}
-              </div>
+                  <div className="field-group">
+                    <label htmlFor="mobile">Mobile Number</label>
+                    <input
+                      id="mobile"
+                      value={formValues.mobile}
+                      onChange={handleChange('mobile')}
+                      placeholder="9876543210"
+                      type="tel"
+                    />
+                    {errors.mobile && <div className="field-error">{errors.mobile}</div>}
+                  </div>
 
-              <div className="field-group">
-                <label htmlFor="email">Email</label>
-                <input
-                  id="email"
-                  value={formValues.email}
-                  onChange={handleChange('email')}
-                  placeholder="example@mail.com"
-                  type="email"
-                />
-                {errors.email && <div className="field-error">{errors.email}</div>}
-              </div>
+                  <div className="field-group">
+                    <label htmlFor="email">Email</label>
+                    <input
+                      id="email"
+                      value={formValues.email}
+                      onChange={handleChange('email')}
+                      placeholder="example@mail.com"
+                      type="email"
+                    />
+                    {errors.email && <div className="field-error">{errors.email}</div>}
+                  </div>
 
-              <div className="field-group full-width">
-                <label htmlFor="addressLine1">Address Line 1</label>
-                <input
-                  id="addressLine1"
-                  value={formValues.addressLine1}
-                  onChange={handleChange('addressLine1')}
-                  placeholder="House number, street, colony"
-                  type="text"
-                />
-                {errors.addressLine1 && <div className="field-error">{errors.addressLine1}</div>}
-              </div>
+                  <div className="field-group full-width">
+                    <label htmlFor="addressLine1">Address Line 1</label>
+                    <input
+                      id="addressLine1"
+                      value={formValues.addressLine1}
+                      onChange={handleChange('addressLine1')}
+                      placeholder="House number, street, colony"
+                      type="text"
+                    />
+                    {errors.addressLine1 && <div className="field-error">{errors.addressLine1}</div>}
+                  </div>
 
-              <div className="field-group full-width">
-                <label htmlFor="addressLine2">Address Line 2</label>
-                <textarea
-                  id="addressLine2"
-                  value={formValues.addressLine2}
-                  onChange={handleChange('addressLine2')}
-                  placeholder="Landmark, nearby locality (optional)"
-                />
-              </div>
+                  <div className="field-group full-width">
+                    <label htmlFor="addressLine2">Address Line 2</label>
+                    <textarea
+                      id="addressLine2"
+                      value={formValues.addressLine2}
+                      onChange={handleChange('addressLine2')}
+                      placeholder="Landmark, nearby locality (optional)"
+                    />
+                  </div>
 
-              <div className="field-group">
-                <label htmlFor="city">City</label>
-                <input
-                  id="city"
-                  value={formValues.city}
-                  onChange={handleChange('city')}
-                  placeholder="Mumbai"
-                  type="text"
-                />
-                {errors.city && <div className="field-error">{errors.city}</div>}
-              </div>
+                  <div className="field-group">
+                    <label htmlFor="city">City</label>
+                    <input
+                      id="city"
+                      value={formValues.city}
+                      onChange={handleChange('city')}
+                      placeholder="Mumbai"
+                      type="text"
+                    />
+                    {errors.city && <div className="field-error">{errors.city}</div>}
+                  </div>
 
-              <div className="field-group">
-                <label htmlFor="state">State</label>
-                <input
-                  id="state"
-                  value={formValues.state}
-                  onChange={handleChange('state')}
-                  placeholder="Maharashtra"
-                  type="text"
-                />
-                {errors.state && <div className="field-error">{errors.state}</div>}
-              </div>
+                  <div className="field-group">
+                    <label htmlFor="state">State</label>
+                    <input
+                      id="state"
+                      value={formValues.state}
+                      onChange={handleChange('state')}
+                      placeholder="Maharashtra"
+                      type="text"
+                    />
+                    {errors.state && <div className="field-error">{errors.state}</div>}
+                  </div>
 
-              <div className="field-group">
-                <label htmlFor="pincode">Pincode</label>
-                <input
-                  id="pincode"
-                  value={formValues.pincode}
-                  onChange={handleChange('pincode')}
-                  placeholder="400001"
-                  type="text"
-                />
-                {errors.pincode && <div className="field-error">{errors.pincode}</div>}
-              </div>
-            </div>
+                  <div className="field-group">
+                    <label htmlFor="pincode">Pincode</label>
+                    <input
+                      id="pincode"
+                      value={formValues.pincode}
+                      onChange={handleChange('pincode')}
+                      placeholder="400001"
+                      type="text"
+                    />
+                    {errors.pincode && <div className="field-error">{errors.pincode}</div>}
+                  </div>
+                </div>
+                <button type="button" className="button button-primary button-block luxury-btn-full" onClick={nextStep} style={{marginTop: '2rem'}}>
+                  Continue to Payment
+                </button>
+              </motion.div>
+            )}
 
-            <div className="section-header">
-              <h2>Payment method</h2>
-              <p>Select the best option for your order today.</p>
-            </div>
+            {checkoutStep === 2 && (
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                <div className="section-header">
+                  <h2>2. Payment method</h2>
+                  <p>Select the best option for your order today.</p>
+                </div>
 
-            <div className="payment-row">
-              {paymentOptions.map((option) => (
-                <label
-                  key={option.value}
-                  className={`payment-label ${paymentMethod === option.value ? 'active' : ''}`}
-                >
-                  <input
-                    type="radio"
-                    name="payment"
-                    value={option.value}
-                    checked={paymentMethod === option.value}
-                    disabled={option.disabled}
-                    onChange={() => setPaymentMethod(option.value)}
-                  />
-                  <span>
-                    <div className="payment-name">{option.label}</div>
-                    <div className="payment-description">{option.description}</div>
-                  </span>
-                </label>
-              ))}
-            </div>
+                <div className="payment-row">
+                  {paymentOptions.map((option) => (
+                    <label
+                      key={option.value}
+                      className={`payment-label luxury-payment ${paymentMethod === option.value ? 'active' : ''}`}
+                    >
+                      <input
+                        type="radio"
+                        name="payment"
+                        value={option.value}
+                        checked={paymentMethod === option.value}
+                        disabled={option.disabled}
+                        onChange={() => setPaymentMethod(option.value)}
+                      />
+                      <span>
+                        <div className="payment-name">{option.label}</div>
+                        <div className="payment-description">{option.description}</div>
+                      </span>
+                    </label>
+                  ))}
+                </div>
+                
+                <div style={{ display: 'flex', gap: '1rem', marginTop: '2rem' }}>
+                  <button type="button" className="button button-secondary luxury-btn-outline" onClick={prevStep} style={{flex: 1, color: 'var(--text)', borderColor: 'var(--border)'}}>
+                    Back
+                  </button>
+                  <button type="button" className="button button-primary luxury-btn-full" onClick={nextStep} style={{flex: 2}}>
+                    Continue to Review
+                  </button>
+                </div>
+              </motion.div>
+            )}
 
-            {apiError && <div className="form-error">{apiError}</div>}
+            {checkoutStep === 3 && (
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+                <div className="section-header">
+                  <h2>3. Review & Submit</h2>
+                  <p>Confirm your details and place your order.</p>
+                </div>
+                
+                <div className="review-block">
+                  <h4>Shipping To:</h4>
+                  <p>{formValues.fullName}<br/>{formValues.addressLine1}, {formValues.city}, {formValues.state} - {formValues.pincode}</p>
+                </div>
+                
+                <div className="review-block">
+                  <h4>Payment Method:</h4>
+                  <p>{paymentOptions.find(o => o.value === paymentMethod)?.label}</p>
+                </div>
 
-            <button type="submit" className="button button-primary button-block" disabled={isSubmitting}>
-              {isSubmitting ? 'Placing your order…' : 'Place Order'}
-            </button>
+                {apiError && <div className="form-error">{apiError}</div>}
+                
+                <div style={{ display: 'flex', gap: '1rem', marginTop: '2rem' }}>
+                  <button type="button" className="button button-secondary luxury-btn-outline" onClick={prevStep} style={{flex: 1, color: 'var(--text)', borderColor: 'var(--border)'}} disabled={isSubmitting}>
+                    Back
+                  </button>
+                  <button type="submit" className="button button-primary luxury-btn-full" style={{flex: 2}} disabled={isSubmitting}>
+                    {isSubmitting ? 'Placing Order...' : 'Place Order Now'}
+                  </button>
+                </div>
+              </motion.div>
+            )}
           </motion.form>
 
           <motion.aside

@@ -3,8 +3,9 @@ import { Link } from 'react-router-dom'
 import { useCart } from '../../context/CartContext'
 import { useWishlist } from '../../context/WishlistContext'
 import { useState, useEffect } from 'react'
+import PriceDisplay from '../common/PriceDisplay'
 
-const FALLBACK_IMAGE = 'https://placehold.co/600x600/f5f0ee/b76e79?text=Image+Not+Found'
+const FALLBACK_IMAGE = 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=600&q=80'
 
 export default function ProductCard({ product, index }) {
   const { addToCart } = useCart()
@@ -50,7 +51,7 @@ export default function ProductCard({ product, index }) {
 
   return (
     <motion.article
-      className="product-card"
+      className="product-card modern-card glow-effect"
       custom={index}
       variants={productVariants}
       initial="hidden"
@@ -58,44 +59,56 @@ export default function ProductCard({ product, index }) {
       viewport={{ once: true, amount: 0.2 }}
       whileHover={{ y: -6 }}
     >
-      <Link to={`/products/${product._id}`} className="product-thumb-link" style={{ display: 'block' }}>
-        <div className="product-thumb" style={{ backgroundImage: `url(${imgUrl})` }}>
-          {product.oldPrice && (
-            <span className="discount-badge">
-              {Math.round((1 - product.price / product.oldPrice) * 100)}% OFF
-            </span>
-          )}
+      <div className="product-thumb-container">
+        <Link to={`/products/${product._id}`} className="product-thumb-link" style={{ display: 'block' }}>
+          <div className="product-thumb" style={{ backgroundImage: `url(${imgUrl})` }}>
+            <div className="product-badges">
+              {product.oldPrice && (
+                <span className="badge-discount">
+                  -{Math.round((1 - product.price / product.oldPrice) * 100)}%
+                </span>
+              )}
+              {product.rating >= 4.8 && (
+                <span className="badge-bestseller">Trending</span>
+              )}
+            </div>
+            
+            <motion.button 
+              type="button" 
+              className={`wishlist-button trendy ${inWishlist ? 'active' : ''}`}
+              aria-label="Add to wishlist"
+              whileTap={{ scale: 0.8 }}
+              onClick={handleWishlistToggle}
+            >
+              <svg width="20" height="20" viewBox="0 0 24 24" fill={inWishlist ? "var(--primary)" : "none"} stroke={inWishlist ? "var(--primary)" : "currentColor"} strokeWidth="1.5">
+                <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+              </svg>
+            </motion.button>
+          </div>
+        </Link>
+        <div className="product-hover-actions">
           <motion.button 
             type="button" 
-            className={`wishlist-button ${inWishlist ? 'active' : ''}`}
-            aria-label="Add to wishlist"
-            whileTap={{ scale: 0.8 }}
-            onClick={handleWishlistToggle}
-            style={{ color: inWishlist ? '#ef4444' : '' }}
+            className={`button button-primary quick-add-btn ${added ? 'added' : ''}`}
+            whileTap={{ scale: 0.95 }}
+            onClick={handleAddToCart}
+            disabled={product.stock === 0}
           >
-            {inWishlist ? '♥' : '♡'}
+            {product.stock === 0 ? 'Out of Stock' : added ? 'Added to Bag' : 'Quick Add ✦'}
           </motion.button>
         </div>
-      </Link>
-      <div className="product-details">
-        <span className="product-brand">{product.brand}</span>
+      </div>
+      <div className="product-details trendy">
+        <span className="product-brand gradient-text">{product.brand}</span>
         <h3>
           <Link to={`/products/${product._id}`}>{product.name}</Link>
         </h3>
-        <div className="product-rating">{stars}</div>
-        <div className="product-pricing">
-          <span className="current-price">₹{product.price}</span>
-          {product.oldPrice && <span className="old-price">₹{product.oldPrice}</span>}
+        <div className="product-price-row">
+          <PriceDisplay price={product.price} oldPrice={product.oldPrice} />
+          <div className="product-rating-compact" style={{ background: 'var(--bg-soft)', color: 'var(--primary)' }}>
+            <span className="star-icon">★</span> {product.rating || '5.0'}
+          </div>
         </div>
-        <motion.button 
-          type="button" 
-          className={`button product-action ${added ? 'button-success' : 'button-secondary'}`}
-          whileTap={{ scale: 0.95 }}
-          onClick={handleAddToCart}
-          disabled={product.stock === 0}
-        >
-          {product.stock === 0 ? 'Out of Stock' : added ? '✓ Added' : 'Add to Cart'}
-        </motion.button>
       </div>
     </motion.article>
   )

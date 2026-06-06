@@ -21,10 +21,14 @@
   margin: 0 auto;
 }
 
-.wishlist-empty-state .empty-icon {
-  font-size: 4rem;
-  margin-bottom: 1.5rem;
-  color: var(--text);
+.empty-state-image {
+  width: 140px;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin: 0 auto 1.5rem auto;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  display: block;
 }
 
 .wishlist-empty-state h2 {

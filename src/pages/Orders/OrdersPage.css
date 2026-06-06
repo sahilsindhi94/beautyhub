@@ -116,3 +116,163 @@
     align-items: flex-start;
   }
 }
+.luxury-hero { text-align: center; margin-bottom: 48px; }
+.luxury-hero h1 { font-family: var(--serif); font-size: 3rem; margin: 12px 0 0; }
+
+.editorial-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 32px;
+}
+
+@media (max-width: 480px) {
+  .editorial-grid {
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  }
+}
+
+.order-ticket.luxury-ticket {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  padding: 0;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.order-ticket.luxury-ticket::before,
+.order-ticket.luxury-ticket::after {
+  content: '';
+  position: absolute;
+  top: 100px;
+  width: 20px;
+  height: 20px;
+  background: var(--bg-soft);
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  z-index: 2;
+}
+
+.order-ticket.luxury-ticket::before {
+  left: -11px;
+  border-right-color: transparent;
+  border-top-color: transparent;
+  transform: rotate(-45deg);
+}
+
+.order-ticket.luxury-ticket::after {
+  right: -11px;
+  border-left-color: transparent;
+  border-top-color: transparent;
+  transform: rotate(45deg);
+}
+
+.ticket-header {
+  padding: 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 2px dashed var(--border);
+  position: relative;
+}
+
+.ticket-label {
+  display: block;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.order-number {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--text);
+}
+
+.ticket-body {
+  padding: 32px;
+  flex: 1;
+}
+
+.ticket-date-price {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 32px;
+}
+
+.order-date, .order-total {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.order-total {
+  font-family: var(--serif);
+  font-size: 1.4rem;
+}
+
+.order-products-preview.luxury-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.order-product-pill {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: transparent;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+}
+
+.order-product-pill img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 2px;
+  border: 1px solid var(--border);
+}
+
+.pill-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.pill-name {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.pill-qty {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.order-more {
+  padding: 8px 0;
+  font-size: 0.9rem;
+  color: var(--muted);
+  font-style: italic;
+}
+
+.ticket-footer {
+  padding: 24px 32px;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+}
+
+.ticket-btn {
+  width: 100%;
+  text-align: center;
+}

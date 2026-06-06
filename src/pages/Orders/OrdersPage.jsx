@@ -24,12 +24,12 @@ export default function OrdersPage() {
       <section className="page page-orders">
         <div className="page-shell orders-empty">
           <div>
-            <span className="empty-icon">📦</span>
-            <h2>No orders yet</h2>
-            <p>Once you place an order, it will appear here with delivery updates and order details.</p>
+            <span className="empty-icon">🛍️</span>
+            <h2>No Orders Found</h2>
+            <p>Your beauty journey awaits. Begin exploring our curated collections.</p>
           </div>
-          <Link to="/products" className="button button-primary button-block">
-            Shop beauty essentials
+          <Link to="/products" className="button button-primary button-block luxury-btn">
+            Explore Collection
           </Link>
         </div>
       </section>
@@ -40,54 +40,65 @@ export default function OrdersPage() {
     <section className="page page-orders">
       <div className="page-shell">
         <motion.div
-          className="orders-hero"
+          className="orders-hero luxury-hero"
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
         >
-          <h1>My Orders</h1>
-          <p>Track recent purchases, review order totals, and open any order for more detail.</p>
+          <span className="section-eyebrow">Your History</span>
+          <h1>Purchase Archive</h1>
         </motion.div>
 
-        <div className="orders-grid">
+        <div className="orders-grid editorial-grid">
           {orders.map((order) => (
             <motion.article
               key={order._id}
-              className="order-card"
+              className="order-ticket luxury-ticket"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.35, delay: 0.05 }}
             >
-              <div className="order-card-header">
+              <div className="ticket-header">
                 <div>
+                  <span className="ticket-label">Order No.</span>
                   <p className="order-number">{order.orderNumber}</p>
-                  <p className="order-date">{formatOrderDate(order.createdAt)}</p>
                 </div>
                 <StatusBadge status={order.status} />
               </div>
 
-              <div className="order-card-body">
-                <div className="order-detail-row">
-                  <span>{order.orderItems.length} products</span>
-                  <span>{formatCurrency(order.total)}</span>
+              <div className="ticket-body">
+                <div className="ticket-date-price">
+                  <div>
+                    <span className="ticket-label">Date</span>
+                    <p className="order-date">{formatOrderDate(order.createdAt)}</p>
+                  </div>
+                  <div>
+                    <span className="ticket-label">Total</span>
+                    <p className="order-total">{formatCurrency(order.total)}</p>
+                  </div>
                 </div>
 
-                <div className="order-products-preview">
+                <div className="order-products-preview luxury-preview">
                   {order.orderItems.slice(0, 3).map((item) => (
                     <div key={item.name} className="order-product-pill">
                       <img src={item.image} alt={item.name} />
-                      <span>{item.name}</span>
+                      <div className="pill-info">
+                        <span className="pill-name">{item.name}</span>
+                        <span className="pill-qty">Qty: {item.quantity}</span>
+                      </div>
                     </div>
                   ))}
                   {order.orderItems.length > 3 && (
-                    <span className="order-more">+{order.orderItems.length - 3} more</span>
+                    <div className="order-more">
+                      <span>+{order.orderItems.length - 3}</span>
+                    </div>
                   )}
                 </div>
               </div>
 
-              <div className="order-card-footer">
-                <Link to={`/orders/${order._id}`} className="button button-secondary">
-                  View details
+              <div className="ticket-footer">
+                <Link to={`/orders/${order._id}`} className="button luxury-btn-outline ticket-btn">
+                  View Receipt
                 </Link>
               </div>
             </motion.article>

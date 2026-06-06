@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { useCart } from '../../context/CartContext'
-import './CartPage.css' // Will create shortly
+import PriceDisplay from '../../components/common/PriceDisplay'
+import './CartPage.css'
 
 export default function CartPage() {
   const { cartItems, updateQuantity, removeFromCart, clearCart, cartTotal, itemCount } = useCart()
@@ -14,7 +15,7 @@ export default function CartPage() {
       <section className="page page-cart">
         <div className="page-shell">
           <div className="cart-empty-state">
-            <div className="empty-icon">🛒</div>
+            <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=400&q=80" alt="Empty Cart" className="empty-state-image" />
             <h2>Your cart is empty</h2>
             <p>Looks like you haven't added any beauty essentials to your cart yet.</p>
             <Link to="/products" className="button button-primary">
@@ -46,7 +47,7 @@ export default function CartPage() {
                 <div className="cart-item-details">
                   <span className="item-brand">{item.brand}</span>
                   <Link to={`/products/${item._id}`} className="item-name">{item.name}</Link>
-                  <span className="item-price">₹{item.price}</span>
+                  <PriceDisplay price={item.price} oldPrice={item.oldPrice} />
                 </div>
                 
                 <div className="cart-item-controls">

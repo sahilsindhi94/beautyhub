@@ -3,6 +3,7 @@ import { useQuery } from 'convex/react'
 import { api } from '../../../convex/_generated/api'
 import ProductCard from '../../components/product/ProductCard'
 import ProductSkeleton from '../../components/ui/ProductSkeleton'
+import { useSearchParams } from 'react-router-dom'
 import './ProductsPage.css' // We might need this for specific layout
 
 // Helper for debouncing
@@ -20,11 +21,21 @@ function useDebounce(value, delay) {
 export default function ProductsPage() {
   const allProducts = useQuery(api.products.getProducts)
 
+  const [searchParams] = useSearchParams()
+  
   // Filters State
-  const [searchTerm, setSearchTerm] = useState('')
+  const [searchTerm, setSearchTerm] = useState(searchParams.get('search') || '')
+  const [isFilterOpen, setIsFilterOpen] = useState(false)
   const debouncedSearchTerm = useDebounce(searchTerm, 300)
   
-  const [selectedCategory, setSelectedCategory] = useState('All')
+  const [selectedCategory, setSelectedCategory] = useState(() => {
+    const cat = searchParams.get('category')
+    if (cat) {
+      const match = ['Makeup', 'Skincare', 'Haircare', 'Fragrance', 'Beauty Tools'].find(c => c.toLowerCase() === cat.toLowerCase())
+      return match || 'All'
+    }
+    return 'All'
+  })
   const [priceRange, setPriceRange] = useState('All') // 'Under500', '500-1000', '1000-2000', '2000+'
   const [minRating, setMinRating] = useState(0)
   const [featuredOnly, setFeaturedOnly] = useState(false)
@@ -107,8 +118,16 @@ export default function ProductsPage() {
       <div className="page-shell">
         <div className="products-layout">
           
+          {/* Mobile Overlay */}
+          <div className={`mobile-filter-overlay ${isFilterOpen ? 'is-active' : ''}`} onClick={() => setIsFilterOpen(false)}></div>
+
           {/* Sidebar Filters */}
-          <aside className="products-sidebar">
+          <aside className={`products-sidebar ${isFilterOpen ? 'is-open' : ''}`}>
+            <div className="mobile-filter-header">
+              <h3>Filters</h3>
+              <button className="close-filter-btn" onClick={() => setIsFilterOpen(false)} aria-label="Close filters">✕</button>
+            </div>
+            
             <div className="filter-group">
               <input 
                 type="search" 
@@ -202,7 +221,17 @@ export default function ProductsPage() {
           {/* Main Content */}
           <main className="products-main">
             <div className="products-header">
-              <h2>All Products {allProducts && `(${filteredAndSortedProducts.length})`}</h2>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <button 
+                  className="mobile-filter-btn" 
+                  onClick={() => setIsFilterOpen(true)}
+                  aria-label="Open Filters"
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
+                  Filters
+                </button>
+                <h2>All Products {allProducts && `(${filteredAndSortedProducts.length})`}</h2>
+              </div>
               <div className="sort-control">
                 <label htmlFor="sort">Sort by:</label>
                 <select 
@@ -228,6 +257,7 @@ export default function ProductsPage() {
               </div>
             ) : filteredAndSortedProducts.length === 0 ? (
               <div className="empty-state" style={{ padding: '4rem', textAlign: 'center' }}>
+                <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=400&q=80" alt="No products found" className="empty-state-image" />
                 <h3>No products found</h3>
                 <p>Try adjusting your filters or search query.</p>
                 <button 

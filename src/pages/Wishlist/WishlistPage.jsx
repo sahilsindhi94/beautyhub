@@ -2,7 +2,8 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { useWishlist } from '../../context/WishlistContext'
 import { useCart } from '../../context/CartContext'
-import './WishlistPage.css' // Will create shortly
+import PriceDisplay from '../../components/common/PriceDisplay'
+import './WishlistPage.css'
 
 export default function WishlistPage() {
   const { wishlistItems, removeFromWishlist } = useWishlist()
@@ -18,7 +19,7 @@ export default function WishlistPage() {
       <section className="page page-wishlist">
         <div className="page-shell">
           <div className="wishlist-empty-state">
-            <div className="empty-icon">♥</div>
+            <img src="https://images.unsplash.com/photo-1620916566398-39f1143ab7be?auto=format&fit=crop&w=400&q=80" alt="Empty Wishlist" className="empty-state-image" />
             <h2>Your wishlist is empty</h2>
             <p>Save items you love here and review them later.</p>
             <Link to="/products" className="button button-primary">
@@ -51,10 +52,7 @@ export default function WishlistPage() {
               <div className="wishlist-item-info">
                 <span className="item-brand">{item.brand}</span>
                 <Link to={`/products/${item._id}`} className="item-name">{item.name}</Link>
-                <div className="item-price">
-                  <span className="current-price">₹{item.price}</span>
-                  {item.oldPrice && <span className="old-price">₹{item.oldPrice}</span>}
-                </div>
+                <PriceDisplay price={item.price} oldPrice={item.oldPrice} />
               </div>
 
               <div className="wishlist-item-actions">

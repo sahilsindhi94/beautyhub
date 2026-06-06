@@ -3,6 +3,7 @@ import useScrollToTop from '../hooks/useScrollToTop'
 import MainLayout from '../layouts/MainLayout'
 import HomePage from '../pages/Home/HomePage'
 import ProductsPage from '../pages/Products/ProductsPage'
+import CategoriesPage from '../pages/Categories/CategoriesPage'
 import ProductDetailsPage from '../pages/ProductDetails/ProductDetailsPage'
 import CartPage from '../pages/Cart/CartPage'
 import WishlistPage from '../pages/Wishlist/WishlistPage'
@@ -26,6 +27,7 @@ export default function AppRoutes() {
         {/* Public Routes */}
         <Route index element={<HomePage />} />
         <Route path="products" element={<ProductsPage />} />
+        <Route path="categories" element={<CategoriesPage />} />
         <Route path="products/:id" element={<ProductDetailsPage />} />
         <Route path="login" element={<LoginPage />} />
         <Route path="register" element={<RegisterPage />} />

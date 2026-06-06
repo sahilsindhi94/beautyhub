@@ -1,29 +1,35 @@
-.product-details-layout {
+.product-details-layout.split-screen {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 6rem;
   align-items: start;
 }
 
-.product-image-container .main-image {
+.product-gallery-sticky {
+  position: sticky;
+  top: 100px;
+}
+
+.product-image-container.luxury .main-image {
   width: 100%;
-  aspect-ratio: 4/5;
+  aspect-ratio: 3/4;
   background-size: cover;
   background-position: center;
   border-radius: 4px;
   position: relative;
+  background-color: #f9f9f9;
 }
 
-.badge-large {
+.luxury-badge {
   position: absolute;
   top: 24px;
   left: 24px;
-  background: var(--highlight);
-  color: var(--text);
+  background: var(--text);
+  color: #fff;
   padding: 0.6rem 1.2rem;
   border-radius: 2px;
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
@@ -36,18 +42,31 @@
 .details-brand {
   text-transform: uppercase;
   font-size: 0.95rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
+  font-weight: 700;
+  letter-spacing: 0.15em;
   color: var(--muted);
-  margin-bottom: 0.75rem;
+  margin-bottom: 1rem;
 }
 
 .details-name {
   font-family: var(--serif);
-  font-size: 2.8rem;
+  font-size: 3.2rem;
   line-height: 1.1;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   color: var(--text);
+}
+
+.details-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 2rem;
+}
+
+.details-category {
+  color: var(--muted);
+  font-size: 1.1rem;
+  text-transform: capitalize;
 }
 
 .details-rating-stars {
@@ -67,53 +86,119 @@
   margin-left: 0.5rem;
 }
 
-.details-pricing {
+.details-pricing.luxury-pricing {
   display: flex;
   align-items: baseline;
-  gap: 1rem;
-  margin-bottom: 1rem;
-}
-.details-current-price {
-  font-size: 2rem;
-  font-weight: 600;
-  color: var(--text);
-}
-.details-old-price {
-  font-size: 1.25rem;
-  text-decoration: line-through;
-  color: var(--muted);
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
 }
 
-.details-stock-status {
-  margin-bottom: 2rem;
-  font-size: 0.95rem;
+.details-price-display {
+  font-size: 1.5rem;
+  margin-top: 24px;
+  margin-bottom: 32px;
 }
-.in-stock { color: #10b981; }
-.out-of-stock { color: #ef4444; }
+.details-price-display .price-current {
+  font-size: 1.8rem;
+}
+.details-price-display .price-original {
+  font-size: 1.2rem;
+}
+
 
 .details-description {
   font-size: 1.1rem;
   line-height: 1.8;
   color: var(--muted);
-  margin-bottom: 2.5rem;
+  margin-bottom: 3rem;
 }
 
-.details-actions {
+.why-love-it-section {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 32px;
+  border-radius: 4px;
+  margin-bottom: 3rem;
+}
+
+.why-love-it-section h3 {
+  font-family: var(--serif);
+  font-size: 1.4rem;
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.benefits-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.benefits-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+
+.benefits-list .check {
+  color: var(--text);
+  font-weight: bold;
+}
+
+.details-actions.luxury-actions {
   display: flex;
   gap: 1rem;
-  margin-bottom: 2.5rem;
+  margin-bottom: 2rem;
 }
-.button-large {
-  padding: 1rem 3rem;
-  font-size: 1.1rem;
+
+.luxury-btn-full {
   flex: 1;
+  padding: 18px;
+  background: var(--text);
+  color: #fff;
+  border: none;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: 2px;
+  transition: all 0.3s ease;
 }
-.button-icon {
-  width: 54px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+
+.luxury-btn-full:hover:not(:disabled) {
+  background: #000;
+}
+
+.luxury-wishlist-btn {
+  width: 64px;
+  height: 64px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
   font-size: 1.5rem;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.luxury-wishlist-btn:hover {
+  border-color: var(--text);
+}
+
+.luxury-wishlist-btn.active {
+  color: #ef4444;
+  border-color: #ef4444;
+}
+
+.details-stock-status {
+  margin-top: 1rem;
+  font-size: 0.95rem;
 }
 
 .details-meta {
@@ -148,5 +233,27 @@
   }
   .details-skeleton {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .details-name {
+    font-size: 2.2rem;
+  }
+  .details-pricing.luxury-pricing {
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex-start;
+  }
+  .details-price-display {
+    margin-top: 12px;
+    margin-bottom: 16px;
+  }
+  .details-actions.luxury-actions {
+    flex-direction: column;
+  }
+  .luxury-wishlist-btn {
+    width: 100%;
+    height: 54px;
   }
 }

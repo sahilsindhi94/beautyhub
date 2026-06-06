@@ -1,5 +1,55 @@
 .checkout-intro {
   margin-bottom: 2rem;
+  text-align: center;
+}
+
+.checkout-progress {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.progress-step {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.progress-step.active {
+  color: var(--text);
+}
+
+.step-num {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  display: grid;
+  place-items: center;
+  font-size: 0.85rem;
+}
+
+.progress-step.active .step-num {
+  background: var(--text);
+  color: #fff;
+  border-color: var(--text);
+}
+
+.progress-line {
+  width: 60px;
+  height: 2px;
+  background: var(--border);
+}
+
+.progress-line.active {
+  background: var(--text);
 }
 
 .checkout-grid {
@@ -10,11 +60,12 @@
 
 .checkout-form,
 .summary-panel {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 12px;
   padding: 2.5rem;
-  box-shadow: 0 10px 40px rgba(31, 31, 31, 0.04);
+  box-shadow: 0 10px 40px rgba(210, 136, 154, 0.08);
 }
 
 .checkout-form h2,
@@ -56,6 +107,52 @@
   font-size: 0.95rem;
   font-weight: 600;
   color: var(--text);
+}
+
+.field-group input,
+.payment-label.luxury-payment {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  padding: 1.5rem;
+  border-radius: 2px;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.payment-label.luxury-payment:hover {
+  border-color: var(--text);
+}
+
+.payment-label.luxury-payment.active {
+  border-color: var(--text);
+  background: var(--surface);
+}
+
+.review-block {
+  background: var(--bg);
+  padding: 1.5rem;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  margin-bottom: 1.5rem;
+}
+
+.review-block h4 {
+  margin: 0 0 12px;
+  font-family: var(--serif);
+  font-size: 1.1rem;
+}
+
+.review-block p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.field-group textarea {
+  min-height: 120px;
+  resize: vertical;
 }
 
 .field-group input,
@@ -197,5 +294,16 @@
 @media (max-width: 680px) {
   .field-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .checkout-form,
+  .summary-panel {
+    padding: 1.5rem;
+  }
+  .checkout-form h2,
+  .summary-panel h2 {
+    font-size: 1.4rem;
   }
 }

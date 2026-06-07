@@ -1,19 +1,36 @@
 import { convexAuth } from "@convex-dev/auth/server";
 import { Password } from "@convex-dev/auth/providers/Password";
+import { ConvexError } from "convex/values";
+
+const customPassword = Password({
+  profile(params) {
+    return {
+      email: params.email,
+      name: params.name,
+      isActive: true,
+      createdAt: Date.now(),
+    };
+  },
+});
+
+const originalAuthorize = customPassword.authorize;
+customPassword.authorize = async (params, ctx) => {
+  try {
+    return await originalAuthorize(params, ctx);
+  } catch (error) {
+    if (
+      error.message === "InvalidAccountId" ||
+      error.message === "InvalidSecret" ||
+      error.message === "Invalid credentials"
+    ) {
+      throw new ConvexError("Invalid email or password");
+    }
+    throw error;
+  }
+};
 
 export const { auth, signIn, signOut, store, isAuthenticated } = convexAuth({
-  providers: [
-    Password({
-      profile(params) {
-        return {
-          email: params.email,
-          name: params.name,
-          isActive: true,
-          createdAt: Date.now(),
-        };
-      },
-    }),
-  ],
+  providers: [customPassword],
 });
 
 export async function getCurrentUser(ctx) {

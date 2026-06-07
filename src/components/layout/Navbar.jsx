@@ -8,6 +8,7 @@ import { useAuthActions } from '@convex-dev/auth/react'
 import { useQuery } from 'convex/react'
 import { api } from '../../../convex/_generated/api'
 import PriceDisplay from '../common/PriceDisplay'
+import { useTheme } from '../../context/ThemeContext'
 
 const navItems = [
   { to: '/', label: 'Home' },
@@ -31,6 +32,7 @@ export default function Navbar() {
   const { signOut } = useAuthActions()
   const navigate = useNavigate()
   const location = useLocation()
+  const { theme, toggleTheme } = useTheme()
 
   const allProducts = useQuery(api.products.getProducts)
   
@@ -174,6 +176,19 @@ export default function Navbar() {
             </AnimatePresence>
           </div>
           
+          <button 
+            type="button" 
+            className="icon-btn" 
+            aria-label="Toggle dark mode"
+            onClick={toggleTheme}
+          >
+            {theme === 'dark' ? (
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+            ) : (
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+            )}
+          </button>
+
           <Link to="/wishlist" className="icon-btn" aria-label="Wishlist" style={{ position: 'relative' }}>
             <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
@@ -210,14 +225,66 @@ export default function Navbar() {
           
           <div className="auth-buttons" style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
             {!currentUser ? (
-              <>
-                <Link to="/login" className="button nav-auth-btn" onClick={() => setIsOpen(false)}>
-                  Login
-                </Link>
-                <Link to="/register" className="button nav-auth-btn" onClick={() => setIsOpen(false)}>
-                  Register
-                </Link>
-              </>
+              <div className="profile-dropdown-container" style={{ position: 'relative' }}>
+                <button 
+                  type="button" 
+                  className="icon-btn" 
+                  aria-label="Account"
+                  onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
+                  style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '6px 12px', borderRadius: '20px', background: 'var(--bg-soft)', border: '1px solid var(--border)' }}
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                  </svg>
+                  <span style={{ fontSize: '0.9rem', fontWeight: 600 }}>Account</span>
+                </button>
+                <AnimatePresence>
+                  {profileDropdownOpen && (
+                    <motion.div 
+                      initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                      transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+                      className="glass-panel"
+                      style={{ 
+                        position: 'absolute', 
+                        top: 'calc(100% + 12px)', 
+                        right: 0, 
+                        minWidth: '200px', 
+                        borderRadius: '16px', 
+                        padding: '8px', 
+                        display: 'flex', 
+                        flexDirection: 'column', 
+                        gap: '4px',
+                        zIndex: 100,
+                        boxShadow: '0 20px 40px rgba(0,0,0,0.1)'
+                      }}
+                    >
+                      <div style={{ padding: '8px 12px 12px', borderBottom: '1px solid rgba(0,0,0,0.05)', marginBottom: '4px' }}>
+                        <p style={{ fontWeight: 600, margin: 0, color: 'var(--text)' }}>Welcome</p>
+                        <p style={{ fontSize: '0.85rem', color: 'var(--text-soft)', margin: '4px 0 0' }}>Sign in to access your BeautyHub account</p>
+                      </div>
+                      <Link 
+                        to="/login" 
+                        onClick={() => setProfileDropdownOpen(false)}
+                        className="nav-link"
+                        style={{ padding: '10px 12px', borderRadius: '8px', display: 'block', textDecoration: 'none', fontWeight: 600, color: 'var(--primary)' }}
+                      >
+                        Login
+                      </Link>
+                      <Link 
+                        to="/register" 
+                        onClick={() => setProfileDropdownOpen(false)}
+                        className="nav-link"
+                        style={{ padding: '10px 12px', borderRadius: '8px', display: 'block', textDecoration: 'none' }}
+                      >
+                        Create Account
+                      </Link>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
             ) : (
               <>
               <div className="profile-dropdown-container" style={{ position: 'relative' }}>

@@ -7,7 +7,7 @@
   padding: 56px 24px;
   background:
     radial-gradient(circle at 18% 20%, rgba(212, 175, 55, 0.18), transparent 28%),
-    linear-gradient(135deg, #fffaf7 0%, #ffffff 52%, rgba(183, 110, 121, 0.12) 100%);
+    linear-gradient(135deg, var(--bg) 0%, var(--surface) 52%, var(--primary-soft) 100%);
 }
 
 .auth-copy h1 {
@@ -15,7 +15,7 @@
   margin: 10px 0 18px;
   font-size: clamp(2.4rem, 6vw, 4.8rem);
   line-height: 1;
-  color: #2b2b2b;
+  color: var(--text);
 }
 
 .auth-copy p:not(.section-eyebrow) {
@@ -41,7 +41,7 @@
 }
 
 .clerk-title {
-  color: #2b2b2b;
+  color: var(--text);
 }
 
 .clerk-subtitle {
@@ -49,11 +49,11 @@
 }
 
 .clerk-primary-button {
-  background: #b76e79;
+  background: var(--primary);
 }
 
 .clerk-link {
-  color: #b76e79;
+  color: var(--primary);
 }
 
 @media (max-width: 860px) {

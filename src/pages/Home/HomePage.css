@@ -121,7 +121,7 @@
   position: absolute;
   top: 10%;
   left: -20%;
-  background: rgba(255, 255, 255, 0.7);
+  background: var(--glass-bg);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   padding: 12px;
@@ -130,7 +130,7 @@
   align-items: center;
   gap: 12px;
   box-shadow: 0 10px 30px rgba(255, 92, 168, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.6);
+  border: 1px solid var(--glass-border);
 }
 
 .floating-product-card img {
@@ -156,14 +156,14 @@
   position: absolute;
   bottom: 5%;
   right: -25%;
-  background: rgba(255, 255, 255, 0.7);
+  background: var(--glass-bg);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   padding: 16px;
   border-radius: 20px;
   max-width: 200px;
   box-shadow: 0 10px 30px rgba(255, 92, 168, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.6);
+  border: 1px solid var(--glass-border);
 }
 
 .floating-review-card .stars {
@@ -206,7 +206,7 @@
   text-transform: uppercase;
   letter-spacing: 0.1em;
   background: var(--text);
-  color: #fff;
+  color: var(--surface);
   border: none;
   border-radius: 2px;
 }
@@ -259,7 +259,7 @@
   font-size: clamp(2.2rem, 3.5vw, 3.2rem);
   line-height: 1.08;
   margin: 0;
-  color: #2b2b2b;
+  color: var(--text);
 }
 
 .category-grid,
@@ -492,7 +492,7 @@
 
 .luxury-add-cart:hover {
   background: var(--text);
-  color: #fff;
+  color: var(--surface);
 }
 
 .luxury-add-cart.added {
@@ -623,7 +623,7 @@
 }
 
 .brand-item span {
-  color: #2b2b2b;
+  color: var(--text);
   font-weight: 700;
 }
 
@@ -660,12 +660,12 @@
 
 .blog-copy p {
   margin: 0;
-  color: #6b6070;
+  color: var(--text-soft);
   line-height: 1.8;
 }
 
 .blog-link {
-  color: #b76e79;
+  color: var(--primary);
   font-weight: 700;
   text-decoration: none;
 }
@@ -702,7 +702,7 @@
 }
 
 .testimonial-top span {
-  color: #7a6f79;
+  color: var(--text-soft);
   font-size: 0.95rem;
 }
 
@@ -713,7 +713,7 @@
 
 .testimonial-card p {
   margin: 0;
-  color: #5f5464;
+  color: var(--text-soft);
   line-height: 1.8;
 }
 
@@ -734,7 +734,7 @@
 }
 
 .newsletter-card p {
-  color: #504655;
+  color: var(--text-soft);
   max-width: 480px;
 }
 
@@ -750,8 +750,8 @@
   border-radius: 18px;
   padding: 18px 22px;
   font-size: 1rem;
-  color: #2b2b2b;
-  background: #ffffff;
+  color: var(--text);
+  background: var(--surface);
 }
 
 .newsletter-form input:focus {

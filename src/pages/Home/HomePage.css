@@ -291,7 +291,7 @@
 }
 
 .section-eyebrow {
-  color: var(--accent);
+  color: var(--text-secondary);
   font-weight: 600;
   letter-spacing: 0.25em;
   text-transform: uppercase;

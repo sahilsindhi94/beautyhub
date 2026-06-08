@@ -242,42 +242,27 @@ export default function Navbar() {
                 <AnimatePresence>
                   {profileDropdownOpen && (
                     <motion.div 
-                      initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                      transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-                      className="glass-panel"
-                      style={{ 
-                        position: 'absolute', 
-                        top: 'calc(100% + 12px)', 
-                        right: 0, 
-                        minWidth: '200px', 
-                        borderRadius: '16px', 
-                        padding: '8px', 
-                        display: 'flex', 
-                        flexDirection: 'column', 
-                        gap: '4px',
-                        zIndex: 100,
-                        boxShadow: '0 20px 40px rgba(0,0,0,0.1)'
-                      }}
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -10 }}
+                      transition={{ duration: 0.25 }}
+                      className="profile-dropdown-menu"
                     >
-                      <div style={{ padding: '8px 12px 12px', borderBottom: '1px solid rgba(0,0,0,0.05)', marginBottom: '4px' }}>
+                      <div className="dropdown-header">
                         <p style={{ fontWeight: 600, margin: 0, color: 'var(--text)' }}>Welcome</p>
                         <p style={{ fontSize: '0.85rem', color: 'var(--text-soft)', margin: '4px 0 0' }}>Sign in to access your BeautyHub account</p>
                       </div>
                       <Link 
                         to="/login" 
                         onClick={() => setProfileDropdownOpen(false)}
-                        className="nav-link"
-                        style={{ padding: '10px 12px', borderRadius: '8px', display: 'block', textDecoration: 'none', fontWeight: 600, color: 'var(--primary)' }}
+                        className="dropdown-item"
                       >
                         Login
                       </Link>
                       <Link 
                         to="/register" 
                         onClick={() => setProfileDropdownOpen(false)}
-                        className="nav-link"
-                        style={{ padding: '10px 12px', borderRadius: '8px', display: 'block', textDecoration: 'none' }}
+                        className="dropdown-item"
                       >
                         Create Account
                       </Link>
@@ -301,47 +286,32 @@ export default function Navbar() {
                 </button>
                 <AnimatePresence>
                   {profileDropdownOpen && (
-                    <motion.div 
-                      initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                      transition={{ type: 'spring', stiffness: 300, damping: 25 }}
-                      className="glass-panel"
-                      style={{ 
-                        position: 'absolute', 
-                        top: 'calc(100% + 12px)', 
-                        right: 0, 
-                        minWidth: '220px', 
-                        borderRadius: '16px', 
-                        padding: '8px', 
-                        display: 'flex', 
-                        flexDirection: 'column', 
-                        gap: '4px',
-                        zIndex: 100,
-                        boxShadow: '0 20px 40px rgba(0,0,0,0.1)'
-                      }}
-                    >
-                      <div style={{ padding: '12px', borderBottom: '1px solid rgba(0,0,0,0.05)', marginBottom: '4px' }}>
-                        <p style={{ fontWeight: 600, margin: 0, color: 'var(--text)' }}>{currentUser.name || 'Beauty Insider'}</p>
-                        <p style={{ fontSize: '0.85rem', color: 'var(--text-soft)', margin: 0 }}>{currentUser.email || 'Welcome back!'}</p>
-                      </div>
-                      <Link 
-                        to="/profile" 
-                        onClick={() => setProfileDropdownOpen(false)}
-                        className="nav-link"
-                        style={{ padding: '10px 12px', borderRadius: '8px', display: 'block', textDecoration: 'none' }}
+                      <motion.div 
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{ duration: 0.25 }}
+                        className="profile-dropdown-menu"
                       >
-                        Profile Settings
-                      </Link>
-                      <button 
-                        type="button" 
-                        onClick={() => { setProfileDropdownOpen(false); handleLogout(); }}
-                        className="nav-link"
-                        style={{ padding: '10px 12px', borderRadius: '8px', background: 'none', border: 'none', width: '100%', textAlign: 'left', cursor: 'pointer', color: 'var(--primary)' }}
-                      >
-                        Log Out
-                      </button>
-                    </motion.div>
+                        <div className="dropdown-header">
+                          <p style={{ fontWeight: 600, margin: 0, color: 'var(--text)' }}>{currentUser.name || 'Beauty Insider'}</p>
+                          <p style={{ fontSize: '0.85rem', color: 'var(--text-soft)', margin: 0 }}>{currentUser.email || 'Welcome back!'}</p>
+                        </div>
+                        <Link 
+                          to="/profile" 
+                          onClick={() => setProfileDropdownOpen(false)}
+                          className="dropdown-item"
+                        >
+                          Profile Settings
+                        </Link>
+                        <button 
+                          type="button" 
+                          onClick={() => { setProfileDropdownOpen(false); handleLogout(); }}
+                          className="dropdown-item"
+                        >
+                          Log Out
+                        </button>
+                      </motion.div>
                   )}
                 </AnimatePresence>
               </div>

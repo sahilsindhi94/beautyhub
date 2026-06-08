@@ -415,6 +415,24 @@ export default function Navbar() {
                     </Link>
                   )
                 })}
+                {/* Additional Mobile Links */}
+                <div className="mobile-auth-divider" style={{ margin: '8px 0', borderTop: '1px solid var(--border)' }}></div>
+                <Link to="/wishlist" className="nav-link" onClick={() => setIsOpen(false)} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  Wishlist
+                  {wishlistItems.length > 0 && (
+                    <span style={{ background: 'var(--primary)', color: 'white', borderRadius: '12px', padding: '2px 8px', fontSize: '0.8rem', fontWeight: 'bold' }}>
+                      {wishlistItems.length}
+                    </span>
+                  )}
+                </Link>
+                <Link to="/cart" className="nav-link" onClick={() => setIsOpen(false)} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  Cart
+                  {itemCount > 0 && (
+                    <span style={{ background: 'var(--primary)', color: 'white', borderRadius: '12px', padding: '2px 8px', fontSize: '0.8rem', fontWeight: 'bold' }}>
+                      {itemCount}
+                    </span>
+                  )}
+                </Link>
                 
                 {/* Mobile Auth Links */}
                 <div className="mobile-auth-divider" style={{ margin: '16px 0', borderTop: '1px solid var(--border)' }}></div>

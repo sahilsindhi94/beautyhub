@@ -13,8 +13,8 @@ const customPassword = Password({
   },
 });
 
-const originalAuthorize = customPassword.authorize;
-customPassword.authorize = async (params, ctx) => {
+const originalAuthorize = customPassword.options.authorize;
+customPassword.options.authorize = async (params, ctx) => {
   try {
     return await originalAuthorize(params, ctx);
   } catch (error) {

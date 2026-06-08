@@ -842,8 +842,16 @@ a {
 }
 
 @media (max-width: 768px) {
-  .auth-buttons {
-    display: none !important;
+  .account-text {
+    display: none;
+  }
+  
+  .auth-buttons button {
+    padding: 6px;
+    width: 32px;
+    height: 32px;
+    justify-content: center;
+    border-radius: 50% !important;
   }
 
   .mobile-overlay {
@@ -972,8 +980,11 @@ a {
 @media (max-width: 414px) {
   body, html { overflow-x: hidden; width: 100%; position: relative; }
   .site-navbar { padding: 8px 12px; width: 95vw !important; left: 50% !important; transform: translateX(-50%) !important; }
-  .navbar-actions { gap: 8px; }
-  .icon-btn { padding: 4px; width: 32px; height: 32px; }
+  .navbar-actions { gap: 4px; }
+  .icon-btn { padding: 4px; width: 28px; height: 28px; }
+  .auth-buttons button { padding: 4px; width: 28px; height: 28px; }
+  .navbar-toggle { width: 32px; height: 32px; }
+  .navbar-toggle span { width: 18px; height: 2px; margin: 3px 0; }
   .brand { font-size: 1.25rem; }
   .product-grid, .category-grid { grid-template-columns: 1fr !important; gap: 16px; padding: 0 12px; }
   .hero-content { padding: 0 16px; flex-direction: column; text-align: center; }

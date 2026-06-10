@@ -187,7 +187,7 @@ export default function CheckoutPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
         >
-          <h1 style={{ fontFamily: 'var(--heading)', fontSize: 'clamp(2.5rem, 5vw, 4rem)', fontWeight: 800, margin: '0 0 32px', textAlign: 'center', letterSpacing: '-0.03em', lineHeight: 1.1 }}>Secure Checkout</h1>
+          <h1 style={{ fontFamily: 'var(--heading)', fontSize: 'clamp(1.8rem, 6vw, 3rem)', fontWeight: 800, margin: '0 0 32px', textAlign: 'center', letterSpacing: '-0.03em', lineHeight: 1.1 }}>Secure Checkout</h1>
           <div className="checkout-progress premium-progress">
             <div className={`progress-step ${checkoutStep >= 1 ? 'active' : ''}`} onClick={() => checkoutStep > 1 && setCheckoutStep(1)}>
               <span className="step-num">1</span> Shipping
@@ -350,11 +350,11 @@ export default function CheckoutPage() {
                   ))}
                 </div>
                 
-                <div style={{ display: 'flex', gap: '1rem', marginTop: '2rem' }}>
-                  <button type="button" className="button button-secondary luxury-btn-outline" onClick={prevStep} style={{flex: 1, color: 'var(--text)', borderColor: 'var(--border)'}}>
+                <div className="form-actions" style={{ marginTop: '2rem' }}>
+                  <button type="button" className="button premium-back-btn" onClick={prevStep} style={{flex: 1, marginTop: 0}}>
                     Back
                   </button>
-                  <button type="button" className="button button-primary luxury-btn-full" onClick={nextStep} style={{flex: 2}}>
+                  <button type="button" className="button premium-continue-btn" onClick={nextStep} style={{flex: 2, marginTop: 0}}>
                     Continue to Review
                   </button>
                 </div>
@@ -439,3 +439,4 @@ export default function CheckoutPage() {
     </section>
   )
 }
+

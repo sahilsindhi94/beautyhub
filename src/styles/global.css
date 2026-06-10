@@ -2,6 +2,8 @@
 
 * { box-sizing: border-box; }
 
+img { max-width: 100%; height: auto; }
+
 :root {
   --bg: #FFF8FC;
   --bg-soft: #FFF0F6;
@@ -140,6 +142,7 @@ html {
   scroll-behavior: smooth;
   overflow-x: hidden;
   width: 100%;
+  max-width: 100vw;
 }
 
 body {
@@ -151,6 +154,7 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease;
   overflow-x: hidden;
   width: 100%;
+  max-width: 100vw;
   position: relative;
 }
 
@@ -697,6 +701,7 @@ a {
 
 .footer-link a:hover::after {
   width: 100%;
+  max-width: 100vw;
 }
 
 .newsletter-form {
@@ -1152,5 +1157,7 @@ a {
 
 
 @media (max-width: 768px) { .app-content { padding-left: 16px !important; padding-right: 16px !important; } }
+
+
 
 

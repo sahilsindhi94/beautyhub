@@ -300,3 +300,17 @@
 }
 
 
+
+.premium-section-header p { word-wrap: break-word; overflow-wrap: break-word; max-width: 100%; }
+@media (max-width: 600px) {
+  .premium-checkout-bg { padding-top: 140px; }
+  .premium-continue-btn, .premium-back-btn { width: 100% !important; max-width: 100%; display: block; margin-left: 0; margin-right: 0; box-sizing: border-box; }
+  .premium-section-header h2 { font-size: clamp(1.4rem, 6vw, 1.8rem); }
+  .payment-option { width: 100%; max-width: 100%; box-sizing: border-box; }
+  .premium-progress { flex-wrap: wrap; justify-content: center; gap: 6px; max-width: 100%; padding: 0; }
+  .progress-step { font-size: 0.8rem; gap: 4px; }
+  .step-num { width: 22px; height: 22px; font-size: 0.75rem; }
+  .progress-line { width: 15px; }
+  .checkout-intro h1 { font-size: clamp(2rem, 8vw, 3rem) !important; }
+}
+

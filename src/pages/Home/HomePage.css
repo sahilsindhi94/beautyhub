@@ -224,12 +224,13 @@
   }
 
   .floating-review-card {
-    bottom: -20px;
-    right: 50%;
-    transform: translateX(50%);
-    width: 90%;
-    max-width: 300px;
-    text-align: left;
+    bottom: 10px;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 85%;
+        text-align: left;
     padding: 12px;
   }
   
@@ -904,3 +905,4 @@
     font-size: 2.5rem;
   }
 }
+

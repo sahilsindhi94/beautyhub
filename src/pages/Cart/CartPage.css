@@ -307,3 +307,9 @@
     padding: 4px;
   }
 }
+
+@media (max-width: 600px) {
+  .premium-summary { padding: 16px; width: 100%; max-width: 100%; box-sizing: border-box; }
+  .premium-checkout-btn { width: 100%; max-width: 100%; display: block; }
+}
+

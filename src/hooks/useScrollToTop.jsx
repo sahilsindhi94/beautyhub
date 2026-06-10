@@ -16,6 +16,6 @@ export default function useScrollToTop() {
       return
     }
     // Otherwise scroll to top
-    window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
   }, [pathname, hash])
 }

@@ -285,7 +285,18 @@
   .form-actions {
     flex-direction: column;
   }
-  .premium-checkout-panel {
-    padding: 24px;
-  }
+  .premium-checkout-panel { padding: 16px; }
 }
+
+@media (max-width: 600px) {
+  .premium-progress { flex-wrap: wrap; justify-content: center; gap: 8px; }
+  .progress-step { font-size: 0.85rem; gap: 6px; }
+  .step-num { width: 24px; height: 24px; font-size: 0.8rem; }
+  .progress-line { width: 20px; }
+  .payment-option { padding: 16px; gap: 12px; }
+  .payment-option-label { font-size: 1.05rem; }
+  .review-block { word-break: break-word; padding: 16px !important; }
+  .summary-row { flex-wrap: wrap; }
+}
+
+

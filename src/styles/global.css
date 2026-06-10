@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;600;800&display=swap');
 
+* { box-sizing: border-box; }
+
 :root {
   --bg: #FFF8FC;
   --bg-soft: #FFF0F6;
@@ -1145,5 +1147,10 @@ a {
     margin-top: 32px;
   }
 }
+
+
+
+
+@media (max-width: 768px) { .app-content { padding-left: 16px !important; padding-right: 16px !important; } }
 
 

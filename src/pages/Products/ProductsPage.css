@@ -224,3 +224,6 @@
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   display: block;
 }
+
+@media (max-width: 768px) { .products-layout { padding-top: max(100px, calc(env(safe-area-inset-top) + 80px)) !important; } }
+

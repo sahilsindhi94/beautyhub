@@ -1067,7 +1067,7 @@ a {
 .profile-img-btn img { width: 36px; height: 36px; border-radius: 50%; object-fit: cover; border: 2px solid var(--primary-soft); flex-shrink: 0; }
 @media (max-width: 768px) { .hide-on-mobile { display: none !important; } .account-btn { padding: 2px !important; background: transparent !important; border: none !important; border-radius: 50% !important; } .profile-img-btn { padding: 2px !important; } .profile-img-btn img { width: 20px !important; height: 20px !important; } }
 
-.main-content, .page-header { padding-top: max(80px, calc(env(safe-area-inset-top) + 60px)) !important; }
+.app-content { padding-top: max(80px, calc(env(safe-area-inset-top) + 60px)) !important; }
 
 
 @media (max-width: 768px) {
@@ -1145,4 +1145,5 @@ a {
     margin-top: 32px;
   }
 }
+
 

@@ -168,7 +168,7 @@ export default function ProductDetailsPage() {
                 onClick={() => addToCart(product)}
                 style={{ flex: 1, padding: '20px', fontSize: '1.1rem', borderRadius: '100px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em' }}
               >
-                {product.stock === 0 ? 'Out of Stock' : 'Add to Bag'}
+                {product.stock === 0 ? 'Out of Stock' : 'Add to Cart'}
               </button>
               <button
                 className={`button glass-wishlist-btn ${inWishlist ? 'active' : ''}`}

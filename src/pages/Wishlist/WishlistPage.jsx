@@ -80,7 +80,7 @@ export default function WishlistPage() {
                       onClick={(e) => handleMoveToCart(item, e)}
                       disabled={item.stock === 0}
                     >
-                      {item.stock === 0 ? 'Out of Stock' : 'Quick Add to Bag'}
+                      {item.stock === 0 ? 'Out of Stock' : 'Add to Cart'}
                     </button>
                   </div>
                 </div>

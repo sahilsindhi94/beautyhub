@@ -94,7 +94,7 @@ export default function ProductCard({ product, index }) {
             onClick={handleAddToCart}
             disabled={product.stock === 0}
           >
-            {product.stock === 0 ? 'Out of Stock' : added ? 'Added to Bag' : 'Quick Add ✦'}
+            {product.stock === 0 ? 'Out of Stock' : added ? 'Added to Cart' : 'Add to Cart'}
           </motion.button>
         </div>
       </div>

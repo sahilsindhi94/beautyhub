@@ -63,9 +63,9 @@ export default function LoginPage() {
             </p>
 
             {error && (
-              <div style={{ color: '#d32f2f', backgroundColor: '#ffebee', padding: '12px', borderRadius: '4px', marginBottom: '20px', fontSize: '0.9rem' }}>
-                {error}
-              </div>
+              <motion.div initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }} className="status-message error">
+                <span aria-hidden="true">⚠</span> {error}
+              </motion.div>
             )}
 
             <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>

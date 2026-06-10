@@ -18,7 +18,7 @@ export default function CartPage() {
             <div className="empty-icon-wrapper">
               <span className="empty-icon">🛒</span>
             </div>
-            <h2 style={{ fontFamily: 'var(--heading)', fontSize: '2.5rem', fontWeight: 800, margin: '16px 0 8px' }}>Your bag is empty</h2>
+            <h2 style={{ fontFamily: 'var(--heading)', fontSize: '2.5rem', fontWeight: 800, margin: '16px 0 8px' }}>Your cart is empty</h2>
             <p style={{ color: 'var(--text-soft)', fontSize: '1.1rem', marginBottom: '32px' }}>Looks like you haven't added any beauty essentials yet.</p>
             <Link to="/products" className="button premium-explore-btn">
               Continue Shopping
@@ -38,7 +38,7 @@ export default function CartPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4 }}
         >
-          <h1 className="cart-title" style={{ fontFamily: 'var(--heading)', fontSize: 'clamp(2.5rem, 5vw, 4rem)', fontWeight: 800, margin: 0, letterSpacing: '-0.03em', lineHeight: 1.1 }}>Your Bag</h1>
+          <h1 className="cart-title" style={{ fontFamily: 'var(--heading)', fontSize: 'clamp(2.5rem, 5vw, 4rem)', fontWeight: 800, margin: 0, letterSpacing: '-0.03em', lineHeight: 1.1 }}>Your Cart</h1>
           <p style={{ color: 'var(--text-soft)', fontSize: '1.1rem', marginTop: '8px' }}>{itemCount} items</p>
         </motion.div>
         
@@ -89,7 +89,7 @@ export default function CartPage() {
             
             <div className="cart-actions" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '24px' }}>
               <button className="button button-outline" onClick={clearCart} style={{ borderRadius: '100px', padding: '12px 24px' }}>
-                Clear Bag
+                Clear Cart
               </button>
               <Link to="/products" className="continue-shopping" style={{ color: 'var(--primary)', fontWeight: 600, textDecoration: 'none' }}>
                 ← Continue Shopping

@@ -78,10 +78,9 @@ export default function ContactSection() {
             onSubmit={handleSubmit}
           >
             {isSuccess && (
-              <div style={{ padding: '16px 20px', background: '#ecfdf5', color: '#065f46', borderRadius: '12px', border: '1px solid #a7f3d0', display: 'flex', alignItems: 'center', gap: '12px' }}>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-                <span style={{ fontWeight: 500 }}>Message sent successfully! Our team will get back to you soon.</span>
-              </div>
+              <motion.div initial={{ opacity: 0, y: -5 }} animate={{ opacity: 1, y: 0 }} className="status-message success">
+                <span aria-hidden="true">✔</span> Message sent successfully! Our team will get back to you soon.
+              </motion.div>
             )}
 
             <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>

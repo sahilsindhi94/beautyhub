@@ -11,12 +11,12 @@ import PriceDisplay from '../common/PriceDisplay'
 import { useTheme } from '../../context/ThemeContext'
 
 const navItems = [
-  { to: '/', label: 'Home' },
-  { to: '/products', label: 'Products' },
-  { to: '/orders', label: 'Orders' },
-  { to: '/categories', label: 'Categories' },
-  { to: '/#about', label: 'About' },
-  { to: '/#contact', label: 'Contact' },
+  { to: '/', label: 'Home', icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg> },
+  { to: '/products', label: 'Products', icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg> },
+  { to: '/categories', label: 'Categories', icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg> },
+  { to: '/orders', label: 'Orders', icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg> },
+  { to: '/#about', label: 'About', icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg> },
+  { to: '/#contact', label: 'Contact', icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg> },
 ]
 
 export default function Navbar() {
@@ -234,22 +234,21 @@ export default function Navbar() {
             )}
           </Link>
           
-          <div className="auth-buttons" style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+          <div className="auth-buttons">
             {!currentUser ? (
-              <div className="profile-dropdown-container" style={{ position: 'relative' }}>
-                <button 
-                  type="button" 
-                  className="icon-btn" 
-                  aria-label="Account"
-                  onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
-                  style={{ display: 'flex', alignItems: 'center', gap: '6px', padding: '6px 12px', borderRadius: '20px', background: 'var(--bg-soft)', border: '1px solid var(--border)' }}
-                >
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="12" cy="7" r="4"></circle>
-                  </svg>
-                  <span className="account-text" style={{ fontSize: '0.9rem', fontWeight: 600 }}>Account</span>
-                </button>
+              <div className="profile-dropdown-container">
+                  <button 
+                    type="button" 
+                    className="icon-btn account-btn" 
+                    aria-label="Account"
+                    onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
+                  >
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                      <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    <span className="account-text hide-on-mobile">Account</span>
+                  </button>
                 <AnimatePresence>
                   {profileDropdownOpen && (
                     <motion.div 
@@ -283,18 +282,18 @@ export default function Navbar() {
               </div>
             ) : (
               <>
-              <div className="profile-dropdown-container" style={{ position: 'relative' }}>
-                <button 
-                  type="button"
-                  onClick={() => setProfileDropdownOpen(!profileDropdownOpen)} 
-                  style={{ display: 'flex', alignItems: 'center', gap: '8px', background: 'none', border: 'none', cursor: 'pointer', padding: '4px' }}
-                >
-                  {currentUser.image ? (
-                    <img src={currentUser.image} alt={currentUser.name} style={{ width: '36px', height: '36px', borderRadius: '50%', objectFit: 'cover', border: '2px solid var(--primary-soft)', flexShrink: 0 }} />
-                  ) : (
-                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" alt={currentUser.name || 'User'} style={{ width: '36px', height: '36px', borderRadius: '50%', objectFit: 'cover', border: '2px solid var(--primary-soft)', flexShrink: 0 }} />
-                  )}
-                </button>
+              <div className="profile-dropdown-container">
+                  <button 
+                    type="button"
+                    className="icon-btn profile-img-btn"
+                    onClick={() => setProfileDropdownOpen(!profileDropdownOpen)} 
+                  >
+                    {currentUser.image ? (
+                      <img src={currentUser.image} alt={currentUser.name} />
+                    ) : (
+                      <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80" alt={currentUser.name || 'User'} />
+                    )}
+                  </button>
                 <AnimatePresence>
                   {profileDropdownOpen && (
                       <motion.div 
@@ -392,6 +391,7 @@ export default function Navbar() {
                         }
                       }}
                     >
+                      {item.icon}
                       {item.label}
                     </Link>
                   )
@@ -399,7 +399,10 @@ export default function Navbar() {
                 {/* Additional Mobile Links */}
                 <div className="mobile-auth-divider" style={{ margin: '8px 0', borderTop: '1px solid var(--border)' }}></div>
                 <Link to="/wishlist" className="nav-link" onClick={() => setIsOpen(false)} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  Wishlist
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+                    Wishlist
+                  </div>
                   {wishlistItems.length > 0 && (
                     <span style={{ background: 'var(--primary)', color: 'white', borderRadius: '12px', padding: '2px 8px', fontSize: '0.8rem', fontWeight: 'bold' }}>
                       {wishlistItems.length}
@@ -407,7 +410,10 @@ export default function Navbar() {
                   )}
                 </Link>
                 <Link to="/cart" className="nav-link" onClick={() => setIsOpen(false)} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  Cart
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                    Cart
+                  </div>
                   {itemCount > 0 && (
                     <span style={{ background: 'var(--primary)', color: 'white', borderRadius: '12px', padding: '2px 8px', fontSize: '0.8rem', fontWeight: 'bold' }}>
                       {itemCount}
@@ -420,23 +426,27 @@ export default function Navbar() {
                 {!currentUser ? (
                   <>
                     <Link to="/login" className="nav-link" onClick={() => setIsOpen(false)}>
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" y1="12" x2="3" y2="12"></line></svg>
                       Login
                     </Link>
                     <Link to="/register" className="nav-link" onClick={() => setIsOpen(false)}>
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
                       Register
                     </Link>
                   </>
                 ) : (
                   <>
                     <Link to="/profile" className="nav-link" onClick={() => setIsOpen(false)}>
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                       Profile
                     </Link>
                     <button 
                       type="button" 
                       className="nav-link" 
                       onClick={handleLogout}
-                      style={{ background: 'none', border: 'none', width: '100%', textAlign: 'center', cursor: 'pointer', fontFamily: 'inherit', padding: '12px 0' }}
+                      style={{ background: 'none', border: 'none', width: '100%', cursor: 'pointer', fontFamily: 'inherit', color: '#ef4444' }}
                     >
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
                       Logout
                     </button>
                   </>

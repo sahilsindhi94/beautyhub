@@ -5,6 +5,7 @@
 img { max-width: 100%; height: auto; }
 
 :root {
+  --navbar-height: 100px;
   --bg: #FFF8FC;
   --bg-soft: #FFF0F6;
   --surface: #FFFFFF;
@@ -217,6 +218,7 @@ a {
   width: min(1120px, 100%);
   margin: 0 auto;
   padding: 0;
+  padding-top: var(--navbar-height);
 }
 
 .site-navbar {
@@ -357,8 +359,9 @@ a {
 .search-dropdown-overlay {
   position: absolute;
   top: calc(100% + 15px);
-  right: -50px;
-  width: 400px;
+  right: 0;
+  width: 100%;
+  max-width: 400px;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 8px;
@@ -1157,6 +1160,8 @@ a {
 
 
 @media (max-width: 768px) { .app-content { padding-left: 16px !important; padding-right: 16px !important; } }
+
+
 
 
 

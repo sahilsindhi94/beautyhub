@@ -120,7 +120,7 @@
 .floating-product-card {
   position: absolute;
   top: 10%;
-  left: -10%;
+  left: 0;
   background: var(--glass-bg);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
@@ -156,7 +156,7 @@
 .floating-review-card {
   position: absolute;
   bottom: 5%;
-  right: -10%;
+  right: 0;
   background: var(--glass-bg);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
@@ -187,8 +187,8 @@
 }
 
 @media (max-width: 1024px) {
-  .floating-review-card { right: 0; transform: translateX(10%); max-width: 200px; }
-  .floating-product-card { left: 0; transform: translateX(-10%); }
+  .floating-review-card { right: 10px; transform: none; max-width: 200px; }
+  .floating-product-card { left: 10px; transform: none; }
 }
 
 @media (max-width: 960px) {

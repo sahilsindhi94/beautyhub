@@ -1,7 +1,7 @@
 .page-orders {
   background: var(--surface);
   min-height: 100vh;
-  padding-top: 120px;
+  
   padding-bottom: 80px;
 }
 
@@ -142,7 +142,7 @@
     left: 16px;
   }
   .timeline-dot {
-    left: -54px;
+    left: -31px;
   }
   .premium-ticket {
     margin-left: 40px;
@@ -158,3 +158,4 @@
     text-align: center;
   }
 }
+

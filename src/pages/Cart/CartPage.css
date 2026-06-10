@@ -1,7 +1,7 @@
 .premium-cart-bg {
   background: var(--bg-soft);
   min-height: 100vh;
-  padding-top: 120px;
+  
   padding-bottom: 80px;
 }
 
@@ -312,4 +312,5 @@
   .premium-summary { padding: 16px; width: 100%; max-width: 100%; box-sizing: border-box; }
   .premium-checkout-btn { width: 100%; max-width: 100%; display: block; }
 }
+
 

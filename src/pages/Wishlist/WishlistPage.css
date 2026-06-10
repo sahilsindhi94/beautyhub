@@ -1,7 +1,7 @@
 .premium-wishlist-bg {
   background: var(--bg-soft);
   min-height: 100vh;
-  padding-top: 120px;
+  
   padding-bottom: 80px;
 }
 
@@ -195,3 +195,4 @@
   display: flex;
   align-items: center;
 }
+
